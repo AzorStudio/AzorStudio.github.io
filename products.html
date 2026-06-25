@@ -17,16 +17,26 @@
       <div class="discover-menu">
         <button class="discover-trigger" type="button">Discover content <span>⌄</span></button>
         <div class="discover-dropdown">
-          <a href="products.html?category=plugins" data-cat="plugins"><span>▣</span> Plugins</a>
-          <a href="products.html?category=setups" data-cat="setups"><span>⌘</span> Setups</a>
-          <a href="products.html?category=configs" data-cat="configs"><span>{ }</span> Configs</a>
-          <a href="products.html?category=skript" data-cat="skript"><span>✦</span> Skript</a>
-          <a href="products.html?category=mods" data-cat="mods"><span>⬢</span> Mods</a>
+          <a href="products.html?category=plugins" data-cat="plugins"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M9 8V2h6v6"/><path d="M18 8v3a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8z"/></svg></span> Plugins</a>
+          <a href="products.html?category=setups" data-cat="setups"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/><line x1="18" x2="18.01" y1="6" y2="6"/><line x1="18" x2="18.01" y1="18" y2="18"/></svg></span> Setups</a>
+          <a href="products.html?category=configs" data-cat="configs"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="21" y2="21"/><line x1="4" x2="20" y1="14" y2="14"/><line x1="4" x2="20" y1="7" y2="7"/><circle cx="9" cy="7" r="2"/><circle cx="15" cy="14" r="2"/><circle cx="9" cy="21" r="2"/></svg></span> Configs</a>
+          <a href="products.html?category=skript" data-cat="skript"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z"/></svg></span> Skript</a>
+          <a href="products.html?category=mods" data-cat="mods"><span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" x2="12" y1="22.08" y2="12"/></svg></span> Mods</a>
         </div>
       </div>
       <a href="index.html#contact">Contact</a>
     </nav>
-    <a class="ghost-btn" href="https://discord.gg/sQCZvGPWxC" target="_blank">Discord</a>
+    <div class="top-actions">
+      <a class="ghost-btn" href="https://discord.gg/sQCZvGPWxC" target="_blank">Discord</a>
+      <a class="ghost-btn hidden" id="adminLink" href="admin.html">Admin</a>
+      <span class="profile-chip hidden" id="accountBadge"></span>
+      <div class="account-menu hidden" id="accountMenu">
+        <button type="button" id="accountPasswordButton">Change password</button>
+        <button type="button" id="accountLogoutButton">Logout</button>
+      </div>
+      <button class="ghost-btn" id="loginButton" data-modal="loginModal">Login</button>
+      <button class="primary-btn" id="signupButton" data-modal="signupModal">Sign Up</button>
+    </div>
   </header>
 
   <main class="shell products-page">
@@ -62,9 +72,13 @@
 
       <div class="market-pagination market-pagination-bottom" id="paginationBottom"></div>
     </section>
-  </main>
+  <div class="modal" id="loginModal"><div class="modal-box"><button class="close-modal">×</button><h2>Login</h2><form id="loginForm"><input name="username" placeholder="Username or email" required><input name="password" type="password" placeholder="Password" required><button class="primary-btn" type="submit">Login</button><small class="modal-status"></small><button type="button" class="link-btn" data-modal="forgotPasswordModal">Forgot password?</button></form></div></div>
+  <div class="modal" id="signupModal"><div class="modal-box"><button class="close-modal">×</button><h2>Sign Up</h2><form id="signupForm"><input name="username" placeholder="Minecraft username" required><input name="email" type="email" placeholder="Email" required><input name="password" type="password" placeholder="Password" required><button class="primary-btn" type="submit">Create Account</button><small class="modal-status"></small></form></div></div>
+  <div class="modal" id="forgotPasswordModal"><div class="modal-box"><button class="close-modal">×</button><h2>Forgot Password</h2><form id="forgotPasswordForm"><input name="login" placeholder="Username or email" required><button class="primary-btn" type="submit">Send Reset Link</button><small class="modal-status"></small></form></div></div>
+  <div class="modal" id="changePasswordModal"><div class="modal-box"><button class="close-modal">×</button><h2>Change Password</h2><form id="changePasswordForm"><input name="currentPassword" type="password" placeholder="Current password" required><input name="newPassword" type="password" placeholder="New password" required><button class="primary-btn" type="submit">Change Password</button><small class="modal-status"></small></form></div></div>
 
   <script src="config.js"></script>
+  <script src="script.js"></script>
   <script src="products.js"></script>
 </body>
 </html>

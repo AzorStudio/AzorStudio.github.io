@@ -1524,6 +1524,15 @@ input[type="file"] {
   color: var(--soft);
 }
 
+.discover-dropdown a svg {
+  transition: transform 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.discover-dropdown a:hover svg {
+  transform: scale(1.1);
+  color: #fff;
+}
+
 /* Admin product edit/delete buttons */
 .row-actions {
   display: flex;
@@ -1571,10 +1580,10 @@ input[type="file"] {
 
 .project-hero {
   display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 24px;
+  grid-template-columns: 110px 1fr auto;
+  gap: 28px;
   align-items: center;
-  padding: 28px;
+  padding: 32px;
   border: 1px solid var(--line);
   border-radius: 28px;
   background: linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
@@ -1599,6 +1608,73 @@ input[type="file"] {
   border-radius: 999px;
   color: var(--muted);
   background: rgba(255,255,255,.04);
+}
+
+/* Loader selection in download modal */
+.loader-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.loader-pill-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 10px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel-3);
+  color: var(--muted);
+  font-weight: 850;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+
+.loader-pill-option:hover {
+  border-color: var(--line-strong);
+  background: rgba(168, 85, 247, 0.1);
+  color: var(--soft);
+}
+
+.loader-pill-option.active {
+  border-color: var(--purple);
+  background: rgba(168, 85, 247, 0.22);
+  color: #fff;
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.25);
+}
+
+.loader-pill-option svg {
+  margin-bottom: 6px;
+  color: var(--soft);
+  transition: transform 0.2s var(--ease);
+}
+
+.loader-pill-option.active svg {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .project-hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    justify-items: center;
+    padding: 24px;
+  }
+  .project-hero-actions {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .project-hero-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+  .project-meta {
+    justify-content: center;
+  }
 }
 
 .project-tabs {
