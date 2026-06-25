@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project — Azor Studios</title>
+  <link rel="icon" href="assets/pack.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-noise"></div>
+  <header class="topbar">
+    <a class="brand" href="index.html"><img src="assets/pack.png" alt=""><span>Azor<span>Studios</span></span></a>
+    <nav class="desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="products.html?category=plugins">Plugins</a>
+      <a href="products.html?category=setups">Setups</a>
+      <a href="products.html?category=configs">Configs</a>
+      <a href="products.html?category=skript">Skript</a>
+      <a href="products.html?category=mods">Mods</a>
+    </nav>
+  </header>
+
+  <main class="shell project-page">
+    <section class="project-hero" id="projectHero">Loading project...</section>
+
+    <nav class="project-tabs">
+      <button class="active" data-tab="overview">Overview</button>
+      <button data-tab="versions">Versions</button>
+      <button data-tab="screenshots">Screenshots</button>
+      <button data-tab="changelog">Changelog</button>
+    </nav>
+
+    <section class="project-tab active" id="overview"></section>
+    <section class="project-tab" id="versions"></section>
+    <section class="project-tab" id="screenshots"><div class="market-card"><h3>No screenshots yet</h3><p>Screenshots can be added later.</p></div></section>
+    <section class="project-tab" id="changelog"></section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="project.js"></script>
+</body>
+</html>

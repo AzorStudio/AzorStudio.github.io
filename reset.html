@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reset Password — Azor Studios</title>
+  <link rel="icon" href="assets/pack.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <main class="section auth-page">
+    <div class="modal-card auth-card">
+      <a class="brand" href="index.html"><img src="assets/pack.png" alt="" /><span>Azor<span>Studios</span></span></a>
+      <h1>Reset Password</h1>
+      <p>Enter your new password below.</p>
+      <form id="resetForm">
+        <input name="newPassword" type="password" placeholder="New password" required minlength="8" />
+        <button class="btn btn-primary" type="submit">Reset Password</button>
+        <small class="modal-status" id="resetStatus"></small>
+      </form>
+    </div>
+  </main>
+  <script src="config.js"></script>
+  <script src="reset.js"></script>
+</body>
+</html>

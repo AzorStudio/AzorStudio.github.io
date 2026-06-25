@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Azor Studios — Minecraft Plugins, Mods & Resource Packs</title>
+  <meta name="description" content="Azor Studios creates Minecraft plugins, mods, resource packs, websites, and server tools." />
+  <meta name="theme-color" content="#080611" />
+  <link rel="icon" href="assets/pack.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-noise"></div>
+  <header class="topbar">
+    <a class="brand" href="index.html"><img src="assets/pack.png" alt=""><span>Azor<span>Studios</span></span></a>
+    <nav class="desktop-nav">
+      <a href="index.html" class="active">Home</a>
+      <div class="discover-menu">
+        <button class="discover-trigger" type="button">Discover content <span>⌄</span></button>
+        <div class="discover-dropdown">
+          <a href="products.html?category=plugins"><span>▣</span> Plugins</a>
+          <a href="products.html?category=setups"><span>⌘</span> Setups</a>
+          <a href="products.html?category=configs"><span>{ }</span> Configs</a>
+          <a href="products.html?category=skript"><span>✦</span> Skript</a>
+          <a href="products.html?category=mods"><span>⬢</span> Mods</a>
+        </div>
+      </div>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="top-actions">
+      <a class="ghost-btn" href="https://discord.gg/sQCZvGPWxC" target="_blank">Discord</a>
+      <a class="ghost-btn hidden" id="adminLink" href="admin.html">Admin</a>
+      <span class="profile-chip hidden" id="accountBadge"></span>
+      <div class="account-menu hidden" id="accountMenu">
+        <button type="button" id="accountPasswordButton">Change password</button>
+        <button type="button" id="accountLogoutButton">Logout</button>
+      </div>
+      <button class="ghost-btn" id="loginButton" data-modal="loginModal">Login</button>
+      <button class="primary-btn" id="signupButton" data-modal="signupModal">Sign Up</button>
+    </div>
+    <button class="mobile-toggle" id="mobileToggle">☰</button>
+  </header>
+
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="products.html?category=plugins">Plugins</a>
+    <a href="products.html?category=setups">Setups</a>
+    <a href="products.html?category=configs">Configs</a>
+    <a href="products.html?category=skript">Skript</a>
+    <a href="products.html?category=mods">Mods</a>
+    <a href="https://discord.gg/sQCZvGPWxC" target="_blank">Discord</a>
+  </nav>
+
+  <main>
+    <section class="hero shell">
+      <div class="hero-copy reveal">
+        <span class="eyebrow">Minecraft Development Studio</span>
+        <h1>Premium Minecraft products for modern servers.</h1>
+        <p>Azor Studios creates plugins, mods, resource packs, server tools, and websites for Minecraft communities.</p>
+        <div class="hero-actions">
+          <a class="primary-btn big" href="products.html?category=plugins">Explore Products</a>
+          <a class="secondary-btn big" href="products.html?category=setups">Server Setups</a>
+        </div>
+        <div class="metrics">
+          <div><b>Plugins</b><span>Server systems</span></div>
+          <div><b>Mods</b><span>Gameplay addons</span></div>
+          <div><b>Packs</b><span>Models & textures</span></div>
+        </div>
+      </div>
+      <div class="hero-preview reveal delay-1">
+        <div class="preview-card main-preview">
+          <img src="assets/pack.png" alt="Azor Studios logo">
+          <h3>Azor Studios</h3>
+          <p>Clean downloads, accounts, admin uploads, and product pages.</p>
+        </div>
+        <div class="floating-card one">Resource Packs</div>
+        <div class="floating-card two">Plugins</div>
+      </div>
+    </section>
+
+    <section class="shell category-section">
+      <div class="section-title reveal">
+        <span class="eyebrow">Browse</span>
+        <h2>Choose a category</h2>
+        <p>Separate pages for plugins, mods, and resource packs — clean like a marketplace.</p>
+      </div>
+      <div class="category-grid">
+        <a class="category-card reveal" href="products.html?category=plugins"><span>01</span><h3>Plugins</h3><p>Paper, Spigot and server-side systems.</p><b>Open Plugins →</b></a>
+        <a class="category-card reveal" href="products.html?category=setups"><span>02</span><h3>Setups</h3><p>Ready-to-use server setups and premade server packages.</p><b>Open Setups →</b></a>
+        <a class="category-card reveal" href="products.html?category=configs"><span>03</span><h3>Configs</h3><p>Optimized plugin configs, menus, ranks and server files.</p><b>Open Configs →</b></a>
+        <a class="category-card reveal" href="products.html?category=skript"><span>04</span><h3>Skript</h3><p>Skript systems, commands, mechanics and custom gameplay files.</p><b>Open Skript →</b></a>
+        <a class="category-card reveal" href="products.html?category=mods"><span>05</span><h3>Mods</h3><p>Modded gameplay and custom additions.</p><b>Open Mods →</b></a>
+      </div>
+    </section>
+
+    <section class="shell ads-grid">
+      <a class="ad-card reveal" href="products.html?category=plugins"><small>Advertisement</small><h3>Need a custom server plugin?</h3><p>Commission polished systems for your SMP or network.</p></a>
+      <a class="ad-card reveal" href="products.html?category=resourcepacks"><small>Advertisement</small><h3>Need custom item models?</h3><p>Resource pack visuals for plugins, servers and stores.</p></a>
+    </section>
+
+    <section class="shell features">
+      <div class="section-title reveal"><span class="eyebrow">Platform</span><h2>Everything needed for releases.</h2></div>
+      <div class="feature-grid">
+        <div class="feature-card reveal"><b>Accounts</b><p>Users can sign up, login, reset passwords and have Minecraft skin avatars.</p></div>
+        <div class="feature-card reveal"><b>Admin Uploads</b><p>Only admins can upload plugins, mods and resource packs from the dashboard.</p></div>
+        <div class="feature-card reveal"><b>Download Tracking</b><p>Admins can see downloads and user activity from the backend dashboard.</p></div>
+        <div class="feature-card reveal"><b>Discord Support</b><p>Community support and bug reports through the official Discord server.</p></div>
+      </div>
+    </section>
+
+    <section class="shell contact" id="contact">
+      <div class="contact-card reveal">
+        <div><span class="eyebrow">Contact</span><h2>Work with Azor Studios.</h2><p>Use Discord for support or email directly for questions and business.</p></div>
+        <div class="contact-links"><a href="https://discord.gg/sQCZvGPWxC" target="_blank">discord.gg/sQCZvGPWxC</a><a href="mailto:ayan1ishaq@gmail.com">ayan1ishaq@gmail.com</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer shell"><p>© Azor Studios. Minecraft plugins, mods and resource packs.</p><a href="https://discord.gg/sQCZvGPWxC" target="_blank">Discord</a></footer>
+
+  <div class="modal" id="loginModal"><div class="modal-box"><button class="close-modal">×</button><h2>Login</h2><form id="loginForm"><input name="username" placeholder="Username or email" required><input name="password" type="password" placeholder="Password" required><button class="primary-btn" type="submit">Login</button><small class="modal-status"></small><button type="button" class="link-btn" data-modal="forgotPasswordModal">Forgot password?</button></form></div></div>
+  <div class="modal" id="signupModal"><div class="modal-box"><button class="close-modal">×</button><h2>Sign Up</h2><form id="signupForm"><input name="username" placeholder="Minecraft username" required><input name="email" type="email" placeholder="Email" required><input name="password" type="password" placeholder="Password" required><button class="primary-btn" type="submit">Create Account</button><small class="modal-status"></small></form></div></div>
+  <div class="modal" id="forgotPasswordModal"><div class="modal-box"><button class="close-modal">×</button><h2>Forgot Password</h2><form id="forgotPasswordForm"><input name="login" placeholder="Username or email" required><button class="primary-btn" type="submit">Send Reset Link</button><small class="modal-status"></small></form></div></div>
+  <div class="modal" id="changePasswordModal"><div class="modal-box"><button class="close-modal">×</button><h2>Change Password</h2><form id="changePasswordForm"><input name="currentPassword" type="password" placeholder="Current password" required><input name="newPassword" type="password" placeholder="New password" required><button class="primary-btn" type="submit">Change Password</button><small class="modal-status"></small></form></div></div>
+
+  <script src="config.js"></script><script src="script.js"></script>
+</body>
+</html>

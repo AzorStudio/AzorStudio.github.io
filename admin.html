@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Azor Studios — Admin Dashboard</title>
+  <link rel="icon" href="assets/pack.png" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body class="admin-body">
+  <div class="noise" aria-hidden="true"></div>
+
+  <aside class="admin-sidebar">
+    <a class="brand admin-brand" href="index.html">
+      <img src="assets/pack.png" alt="" />
+      <span>Azor<span>Studios</span></span>
+    </a>
+    <nav class="admin-menu">
+      <a class="active" href="#uploadSection">Upload</a>
+      <a href="#productsSection">Products</a>
+      <a href="#usersSection">Users</a>
+      <a href="#downloadsSection">Downloads</a>
+      <a href="#activitySection">Activity</a>
+      <a href="index.html">Website</a>
+    </nav>
+    <button class="btn btn-dark admin-logout" id="logoutBtn">Logout</button>
+  </aside>
+
+  <main class="admin-main">
+    <section class="admin-hero">
+      <p class="pill"><span></span> Admin Dashboard</p>
+      <h1>Manage Azor Studios.</h1>
+      <p>Upload plugins, mods and resource packs. Track users, downloads and account activity.</p>
+    </section>
+
+    <section class="admin-upload-card" id="uploadSection">
+      <div class="upload-header">
+        <div>
+          <h2>Create a new project</h2>
+          <p>Modrinth-style upload form for admins only.</p>
+        </div>
+        <span class="upload-badge">Admin Upload</span>
+      </div>
+
+      <form id="uploadForm" class="project-form" enctype="multipart/form-data">
+        <div class="field-group">
+          <label>Type</label>
+          <select name="category" required>
+            <option value="plugins">Plugin</option>
+            <option value="setups">Setup</option>
+            <option value="configs">Config</option>
+            <option value="skript">Skript</option>
+            <option value="mods">Mod</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label>Name</label>
+          <input name="title" id="projectTitle" placeholder="Enter project name..." required />
+          <small>Short and memorable names work best.</small>
+        </div>
+
+        <div class="field-group">
+          <label>URL Preview</label>
+          <input id="slugPreview" value="https://azorstudios/project/" disabled />
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Plugin Version</label>
+            <input name="version" placeholder="1.0.0" value="1.0.0" required />
+          </div>
+          <div class="field-group">
+            <label>Minecraft Versions</label>
+            <input name="minecraftVersions" placeholder="1.21.11, 1.21.10, 1.21.9" value="1.21.x" required />
+            <small>Comma-separated. Newest first.</small>
+          </div>
+          <div class="field-group">
+            <label>Visibility</label>
+            <div class="visibility-pills" aria-label="Visibility">
+              <button type="button" class="selected">Public</button>
+              <button type="button">Unlisted</button>
+              <button type="button">Private</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Loader</label>
+            <div class="checkbox-list" data-checkbox-group="loaders">
+              <label><input type="checkbox" name="loaders" value="paper" checked> Paper</label>
+              <label><input type="checkbox" name="loaders" value="spigot"> Spigot</label>
+              <label><input type="checkbox" name="loaders" value="fabric"> Fabric</label>
+              <label><input type="checkbox" name="loaders" value="forge"> Forge</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label>Platform</label>
+            <div class="checkbox-list" data-checkbox-group="platforms">
+              <label><input type="checkbox" name="platforms" value="bungeecord"> BungeeCord</label>
+              <label><input type="checkbox" name="platforms" value="geyser"> Geyser Extension</label>
+              <label><input type="checkbox" name="platforms" value="velocity"> Velocity</label>
+              <label><input type="checkbox" name="platforms" value="waterfall"> Waterfall</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label>Environment</label>
+            <div class="checkbox-list" data-checkbox-group="environments">
+              <label><input type="checkbox" name="environments" value="client"> Client</label>
+              <label><input type="checkbox" name="environments" value="server" checked> Server</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label>License</label>
+            <select name="license">
+              <option value="proprietary" selected>Proprietary</option>
+              <option value="open_source">Open source</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Summary</label>
+          <textarea name="shortDescription" rows="3" placeholder="A sentence or two that describes your project." required></textarea>
+          <small>This appears on product cards.</small>
+        </div>
+
+        <div class="field-group">
+          <label>Description</label>
+          <textarea name="description" rows="6" placeholder="Full description, setup notes, features, requirements..."></textarea>
+        </div>
+
+        <div class="field-group file-drop">
+          <label>Project icon</label>
+          <input name="icon" type="file" accept=".png,.jpg,.jpeg,.webp,.gif" />
+          <small>Optional icon. Appears in search results, cards and project pages.</small>
+        </div>
+
+        <div class="field-group">
+          <label>Version changelog</label>
+          <textarea name="changelog" rows="4" placeholder="What changed in this version?"></textarea>
+        </div>
+
+        <div class="field-group file-drop">
+          <label>Upload file</label>
+          <input name="file" type="file" accept=".jar,.zip,.mcpack" required />
+          <small>Allowed: .jar, .zip, .mcpack — max 100MB.</small>
+        </div>
+
+        <div class="upload-actions">
+          <button class="btn btn-dark" type="reset">Cancel</button>
+          <button class="btn btn-primary" type="submit">+ Create project</button>
+        </div>
+        <small id="uploadStatus" class="upload-status"></small>
+      </form>
+    </section>
+
+    <section class="admin-stats">
+      <div><strong id="statUsers">0</strong><span>Users</span></div>
+      <div><strong id="statDownloads">0</strong><span>Downloads</span></div>
+      <div><strong id="statActivity">0</strong><span>Activity logs</span></div>
+    </section>
+
+    <section class="admin-panel" id="productsSection">
+      <h2>Uploaded Products</h2>
+      <div id="productsTable" class="table-wrap">Loading...</div>
+    </section>
+
+    <section class="admin-panel" id="usersSection">
+      <h2>Users</h2>
+      <div id="usersTable" class="table-wrap">Loading...</div>
+    </section>
+
+    <section class="admin-panel" id="downloadsSection">
+      <h2>Downloads</h2>
+      <div id="downloadsTable" class="table-wrap">Loading...</div>
+    </section>
+
+    <section class="admin-panel" id="activitySection">
+      <h2>Activity</h2>
+      <div id="activityTable" class="table-wrap">Loading...</div>
+    </section>
+  </main>
+
+  <script src="config.js?v=3"></script>
+  <script src="admin.js?v=3"></script>
+</body>
+</html>
