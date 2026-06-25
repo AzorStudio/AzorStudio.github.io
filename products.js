@@ -32,8 +32,12 @@ function writeState(state, { replace = false } = {}) {
   if (state.sort && state.sort !== 'newest') params.set('sort', state.sort);
   if (state.page && state.page !== 1) params.set('page', String(state.page));
   const url = `${location.pathname}?${params.toString()}`;
-  if (replace) history.replaceState(null, '', url);
-  else history.pushState(null, '', url);
+  try {
+    if (replace) history.replaceState(null, '', url);
+    else history.pushState(null, '', url);
+  } catch (e) {
+    console.warn('History API not supported (e.g. running from file://):', e.message);
+  }
 }
 
 let state = readState();
