@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Azor Studios — Admin Dashboard</title>
   <link rel="icon" href="assets/pack.png" />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="admin-body">
   <div class="noise" aria-hidden="true"></div>
@@ -16,79 +16,250 @@
       <span>Azor<span>Studios</span></span>
     </a>
     <nav class="admin-menu">
-      <a class="active" href="#uploadSection">Upload</a>
-      <a href="#productsSection">Products</a>
-      <a href="#usersSection">Users</a>
-      <a href="#downloadsSection">Downloads</a>
-      <a href="#activitySection">Activity</a>
-      <a href="index.html">Website</a>
+      <a class="active" data-view="projects">⬢ Projects</a>
+      <a data-view="analytics">◈ Analytics</a>
     </nav>
-    <button class="btn btn-dark admin-logout" id="logoutBtn">Logout</button>
+    <a class="btn btn-dark admin-logout" href="index.html">← Website</a>
+    <button class="btn btn-dark admin-logout-btn" id="logoutBtn">Logout</button>
   </aside>
 
   <main class="admin-main">
-    <section class="admin-hero">
-      <p class="pill"><span></span> Admin Dashboard</p>
-      <h1>Manage Azor Studios.</h1>
-      <p>Upload plugins, mods and resource packs. Track users, downloads and account activity.</p>
-    </section>
 
-    <section class="admin-upload-card" id="uploadSection">
-      <div class="upload-header">
+    <!-- ===== PROJECTS VIEW ===== -->
+    <section class="admin-view active" id="view-projects">
+      <div class="admin-view-header">
         <div>
-          <h2>Create a new project</h2>
-          <p>Modrinth-style upload form for admins only.</p>
+          <p class="pill"><span></span> Projects</p>
+          <h1>Manage Projects</h1>
+          <p class="admin-subtitle">Create, edit, and manage all Azor Studios products.</p>
         </div>
-        <span class="upload-badge">Admin Upload</span>
+        <button class="btn btn-primary btn-lg" id="addProjectBtn">+ Add Project</button>
       </div>
 
-      <form id="uploadForm" class="project-form" enctype="multipart/form-data">
-        <div class="field-group">
-          <label>Type</label>
-          <select name="category" required>
-            <option value="plugins">Plugin</option>
-            <option value="setups">Setup</option>
-            <option value="configs">Config</option>
-            <option value="skript">Skript</option>
-            <option value="mods">Mod</option>
-          </select>
+      <div class="admin-search-bar">
+        <div class="market-search">
+          <span class="market-search-icon">⌕</span>
+          <input id="projectSearch" placeholder="Search projects...">
         </div>
+      </div>
 
-        <div class="field-group">
-          <label>Name</label>
-          <input name="title" id="projectTitle" placeholder="Enter project name..." required />
-          <small>Short and memorable names work best.</small>
+      <div class="admin-projects-grid" id="projectsGrid">
+        <div class="admin-loading">Loading projects...</div>
+      </div>
+    </section>
+
+    <!-- ===== ANALYTICS VIEW ===== -->
+    <section class="admin-view" id="view-analytics">
+      <div class="admin-view-header">
+        <div>
+          <p class="pill"><span></span> Analytics</p>
+          <h1>Dashboard Analytics</h1>
+          <p class="admin-subtitle">Overview of users, downloads, and activity.</p>
         </div>
+      </div>
 
-        <div class="field-group">
-          <label>URL Preview</label>
-          <input id="slugPreview" value="https://azorstudios/project/" disabled />
+      <div class="admin-stats">
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div><strong id="statUsers">0</strong><span>Users</span></div>
         </div>
+        <div class="stat-card">
+          <div class="stat-icon">↓</div>
+          <div><strong id="statDownloads">0</strong><span>Downloads</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⬢</div>
+          <div><strong id="statProducts">0</strong><span>Products</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">◎</div>
+          <div><strong id="statActivity">0</strong><span>Activity Logs</span></div>
+        </div>
+      </div>
 
-        <div class="field-row">
+      <div class="admin-panel" id="usersSection">
+        <div class="panel-header">
+          <h2>Users</h2>
+        </div>
+        <div id="usersTable" class="table-wrap">Loading...</div>
+      </div>
+
+      <div class="admin-panel" id="downloadsSection">
+        <div class="panel-header">
+          <h2>Recent Downloads</h2>
+        </div>
+        <div id="downloadsTable" class="table-wrap">Loading...</div>
+      </div>
+
+      <div class="admin-panel" id="activitySection">
+        <div class="panel-header">
+          <h2>Recent Activity</h2>
+        </div>
+        <div id="activityTable" class="table-wrap">Loading...</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== ADD/EDIT PROJECT MODAL ===== -->
+  <div class="modal" id="projectModal">
+    <div class="modal-card modal-lg">
+      <button class="modal-close" type="button">×</button>
+      <h2 id="projectModalTitle">Create New Project</h2>
+      <form id="projectForm" enctype="multipart/form-data">
+        <input type="hidden" name="editId" id="editProjectId" />
+
+        <div class="form-grid-2">
           <div class="field-group">
-            <label>Plugin Version</label>
-            <input name="version" placeholder="1.0.0" value="1.0.0" required />
+            <label>Project Name *</label>
+            <input name="title" id="projectTitleInput" placeholder="Enter project name..." required />
+            <small>Short and memorable names work best.</small>
           </div>
           <div class="field-group">
-            <label>Minecraft Versions</label>
-            <input name="minecraftVersions" placeholder="1.21.11, 1.21.10, 1.21.9" value="1.21.x" required />
-            <small>Comma-separated. Newest first.</small>
+            <label>Category *</label>
+            <select name="category" required>
+              <option value="plugins">Plugin</option>
+              <option value="setups">Setup</option>
+              <option value="configs">Config</option>
+              <option value="skript">Skript</option>
+              <option value="mods">Mod</option>
+            </select>
           </div>
+        </div>
+
+        <div class="field-group">
+          <label>Summary *</label>
+          <textarea name="shortDescription" rows="2" placeholder="A sentence or two that describes your project." required></textarea>
+          <small>This appears on product cards in the marketplace.</small>
+        </div>
+
+        <div class="field-group">
+          <label>Description</label>
+          <textarea name="description" rows="5" placeholder="Full description, setup notes, features, requirements..."></textarea>
+        </div>
+
+        <div class="form-grid-2">
           <div class="field-group">
-            <label>Visibility</label>
-            <div class="visibility-pills" aria-label="Visibility">
-              <button type="button" class="selected">Public</button>
-              <button type="button">Unlisted</button>
-              <button type="button">Private</button>
+            <label>License</label>
+            <select name="license">
+              <option value="proprietary" selected>Proprietary</option>
+              <option value="open_source">Open source</option>
+            </select>
+          </div>
+          <div class="field-group file-drop">
+            <label>Project Icon *</label>
+            <div class="icon-upload-area">
+              <img class="icon-preview" id="iconPreview" src="assets/pack.png" alt="Icon preview" />
+              <div>
+                <input name="icon" type="file" accept=".png,.jpg,.jpeg,.webp,.gif" id="iconFileInput" />
+                <small>PNG, JPG, WebP or GIF. Appears on cards and project pages.</small>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="field-row">
+        <!-- Version fields shown only for new projects -->
+        <div id="initialVersionFields">
+          <div class="form-divider">
+            <span>Initial Version</span>
+          </div>
+
+          <div class="form-grid-3">
+            <div class="field-group">
+              <label>Version *</label>
+              <input name="version" placeholder="1.0.0" value="1.0.0" required />
+            </div>
+            <div class="field-group">
+              <label>Minecraft Versions *</label>
+              <input name="minecraftVersions" placeholder="1.21.4, 1.21.3" value="1.21.x" required />
+              <small>Comma-separated. Newest first.</small>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="field-group">
+              <label>Loaders *</label>
+              <div class="checkbox-list">
+                <label><input type="checkbox" name="loaders" value="paper" checked> Paper</label>
+                <label><input type="checkbox" name="loaders" value="spigot"> Spigot</label>
+                <label><input type="checkbox" name="loaders" value="fabric"> Fabric</label>
+                <label><input type="checkbox" name="loaders" value="forge"> Forge</label>
+              </div>
+            </div>
+            <div class="field-group">
+              <label>Platform</label>
+              <div class="checkbox-list">
+                <label><input type="checkbox" name="platforms" value="bungeecord"> BungeeCord</label>
+                <label><input type="checkbox" name="platforms" value="geyser"> Geyser Extension</label>
+                <label><input type="checkbox" name="platforms" value="velocity"> Velocity</label>
+                <label><input type="checkbox" name="platforms" value="waterfall"> Waterfall</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="field-group">
+              <label>Environment</label>
+              <div class="checkbox-list">
+                <label><input type="checkbox" name="environments" value="client"> Client</label>
+                <label><input type="checkbox" name="environments" value="server" checked> Server</label>
+              </div>
+            </div>
+            <div class="field-group">
+              <label>Changelog</label>
+              <textarea name="changelog" rows="3" placeholder="What's in this version?"></textarea>
+            </div>
+          </div>
+
+          <div class="field-group file-drop">
+            <label>Upload File *</label>
+            <input name="file" type="file" accept=".jar,.zip,.mcpack" id="mainFileInput" />
+            <small>Allowed: .jar, .zip, .mcpack — max 100MB.</small>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-dark" type="button" id="cancelProjectBtn">Cancel</button>
+          <button class="btn btn-primary" type="submit" id="submitProjectBtn">+ Create Project</button>
+        </div>
+        <small id="projectStatus" class="upload-status"></small>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== VERSION MANAGEMENT MODAL ===== -->
+  <div class="modal" id="versionsModal">
+    <div class="modal-card modal-lg">
+      <button class="modal-close" type="button">×</button>
+      <h2 id="versionsModalTitle">Manage Versions</h2>
+      <p class="modal-subtitle" id="versionsModalSub"></p>
+
+      <div class="versions-list" id="versionsList">
+        <div class="admin-loading">Loading versions...</div>
+      </div>
+
+      <div class="form-divider">
+        <span>Add New Version</span>
+      </div>
+
+      <form id="addVersionForm" enctype="multipart/form-data">
+        <input type="hidden" name="productId" id="versionProductId" />
+
+        <div class="form-grid-3">
           <div class="field-group">
-            <label>Loader</label>
-            <div class="checkbox-list" data-checkbox-group="loaders">
+            <label>Version Name *</label>
+            <input name="versionName" placeholder="1.1.0" required />
+          </div>
+          <div class="field-group">
+            <label>Minecraft Versions *</label>
+            <input name="minecraftVersions" placeholder="1.21.4, 1.21.3" value="1.21.x" required />
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="field-group">
+            <label>Loaders *</label>
+            <div class="checkbox-list">
               <label><input type="checkbox" name="loaders" value="paper" checked> Paper</label>
               <label><input type="checkbox" name="loaders" value="spigot"> Spigot</label>
               <label><input type="checkbox" name="loaders" value="fabric"> Fabric</label>
@@ -97,93 +268,113 @@
           </div>
           <div class="field-group">
             <label>Platform</label>
-            <div class="checkbox-list" data-checkbox-group="platforms">
+            <div class="checkbox-list">
               <label><input type="checkbox" name="platforms" value="bungeecord"> BungeeCord</label>
               <label><input type="checkbox" name="platforms" value="geyser"> Geyser Extension</label>
               <label><input type="checkbox" name="platforms" value="velocity"> Velocity</label>
               <label><input type="checkbox" name="platforms" value="waterfall"> Waterfall</label>
             </div>
           </div>
+        </div>
+
+        <div class="form-grid-2">
           <div class="field-group">
             <label>Environment</label>
-            <div class="checkbox-list" data-checkbox-group="environments">
+            <div class="checkbox-list">
               <label><input type="checkbox" name="environments" value="client"> Client</label>
               <label><input type="checkbox" name="environments" value="server" checked> Server</label>
             </div>
           </div>
           <div class="field-group">
-            <label>License</label>
-            <select name="license">
-              <option value="proprietary" selected>Proprietary</option>
-              <option value="open_source">Open source</option>
-            </select>
+            <label>Changelog</label>
+            <textarea name="changelog" rows="3" placeholder="What changed in this version?"></textarea>
           </div>
         </div>
 
-        <div class="field-group">
-          <label>Summary</label>
-          <textarea name="shortDescription" rows="3" placeholder="A sentence or two that describes your project." required></textarea>
-          <small>This appears on product cards.</small>
-        </div>
-
-        <div class="field-group">
-          <label>Description</label>
-          <textarea name="description" rows="6" placeholder="Full description, setup notes, features, requirements..."></textarea>
-        </div>
-
         <div class="field-group file-drop">
-          <label>Project icon</label>
-          <input name="icon" type="file" accept=".png,.jpg,.jpeg,.webp,.gif" />
-          <small>Optional icon. Appears in search results, cards and project pages.</small>
-        </div>
-
-        <div class="field-group">
-          <label>Version changelog</label>
-          <textarea name="changelog" rows="4" placeholder="What changed in this version?"></textarea>
-        </div>
-
-        <div class="field-group file-drop">
-          <label>Upload file</label>
+          <label>Version File *</label>
           <input name="file" type="file" accept=".jar,.zip,.mcpack" required />
           <small>Allowed: .jar, .zip, .mcpack — max 100MB.</small>
         </div>
 
-        <div class="upload-actions">
-          <button class="btn btn-dark" type="reset">Cancel</button>
-          <button class="btn btn-primary" type="submit">+ Create project</button>
+        <div class="modal-actions">
+          <button class="btn btn-primary" type="submit">+ Add Version</button>
         </div>
-        <small id="uploadStatus" class="upload-status"></small>
+        <small id="versionStatus" class="upload-status"></small>
       </form>
-    </section>
+    </div>
+  </div>
 
-    <section class="admin-stats">
-      <div><strong id="statUsers">0</strong><span>Users</span></div>
-      <div><strong id="statDownloads">0</strong><span>Downloads</span></div>
-      <div><strong id="statActivity">0</strong><span>Activity logs</span></div>
-    </section>
+  <!-- ===== EDIT VERSION MODAL ===== -->
+  <div class="modal" id="editVersionModal">
+    <div class="modal-card modal-md">
+      <button class="modal-close" type="button">×</button>
+      <h2>Edit Version</h2>
+      <form id="editVersionForm">
+        <input type="hidden" name="versionId" id="editVersionId" />
 
-    <section class="admin-panel" id="productsSection">
-      <h2>Uploaded Products</h2>
-      <div id="productsTable" class="table-wrap">Loading...</div>
-    </section>
+        <div class="form-grid-2">
+          <div class="field-group">
+            <label>Version Name *</label>
+            <input name="versionName" id="editVersionName" required />
+          </div>
+          <div class="field-group">
+            <label>Minecraft Versions *</label>
+            <input name="minecraftVersions" id="editMcVersions" required />
+          </div>
+        </div>
 
-    <section class="admin-panel" id="usersSection">
-      <h2>Users</h2>
-      <div id="usersTable" class="table-wrap">Loading...</div>
-    </section>
+        <div class="form-grid-2">
+          <div class="field-group">
+            <label>Loaders *</label>
+            <div class="checkbox-list" id="editVersionLoaders">
+              <label><input type="checkbox" name="loaders" value="paper"> Paper</label>
+              <label><input type="checkbox" name="loaders" value="spigot"> Spigot</label>
+              <label><input type="checkbox" name="loaders" value="fabric"> Fabric</label>
+              <label><input type="checkbox" name="loaders" value="forge"> Forge</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label>Platform</label>
+            <div class="checkbox-list" id="editVersionPlatforms">
+              <label><input type="checkbox" name="platforms" value="bungeecord"> BungeeCord</label>
+              <label><input type="checkbox" name="platforms" value="geyser"> Geyser Extension</label>
+              <label><input type="checkbox" name="platforms" value="velocity"> Velocity</label>
+              <label><input type="checkbox" name="platforms" value="waterfall"> Waterfall</label>
+            </div>
+          </div>
+        </div>
 
-    <section class="admin-panel" id="downloadsSection">
-      <h2>Downloads</h2>
-      <div id="downloadsTable" class="table-wrap">Loading...</div>
-    </section>
+        <div class="form-grid-2">
+          <div class="field-group">
+            <label>Environment</label>
+            <div class="checkbox-list" id="editVersionEnvironments">
+              <label><input type="checkbox" name="environments" value="client"> Client</label>
+              <label><input type="checkbox" name="environments" value="server"> Server</label>
+            </div>
+          </div>
+          <div class="field-group">
+            <label>Changelog</label>
+            <textarea name="changelog" id="editVersionChangelog" rows="3"></textarea>
+          </div>
+        </div>
 
-    <section class="admin-panel" id="activitySection">
-      <h2>Activity</h2>
-      <div id="activityTable" class="table-wrap">Loading...</div>
-    </section>
-  </main>
+        <div class="field-group file-drop">
+          <label>Replace File (optional)</label>
+          <input name="file" type="file" accept=".jar,.zip,.mcpack" id="editVersionFile" />
+          <small>Leave empty to keep the current file.</small>
+        </div>
 
-  <script src="config.js?v=3"></script>
-  <script src="admin.js?v=3"></script>
+        <div class="modal-actions">
+          <button class="btn btn-dark" type="button" onclick="closeModal('editVersionModal')">Cancel</button>
+          <button class="btn btn-primary" type="submit">Save Changes</button>
+        </div>
+        <small id="editVersionStatus" class="upload-status"></small>
+      </form>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
 </body>
 </html>

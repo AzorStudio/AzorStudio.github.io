@@ -10,27 +10,13 @@ const names = {
   resourcepacks: 'Resource Packs'
 };
 
-const categoryMeta = [
-  ['plugins', '▣', 'Plugins'],
-  ['setups', '⌘', 'Setups'],
-  ['configs', '{ }', 'Configs'],
-  ['skript', '✦', 'Skript'],
-  ['mods', '⬢', 'Mods'],
-  ['resourcepacks', '◇', 'Resource Packs']
-];
-
-// State is derived from the URL so filters survive refresh/back-button, same idea as Modrinth.
+// State is derived from the URL so filters survive refresh/back-button.
 function readState() {
   const params = new URLSearchParams(location.search);
   return {
     category: params.get('category') || 'plugins',
     search: params.get('search') || '',
     sort: params.get('sort') || 'newest',
-    loader: params.get('loader') || '',
-    platform: params.get('platform') || '',
-    environment: params.get('environment') || '',
-    license: params.get('license') || '',
-    mcVersion: params.get('mcVersion') || '',
     page: Math.max(1, Number(params.get('page')) || 1)
   };
 }
@@ -40,11 +26,6 @@ function writeState(state, { replace = false } = {}) {
   params.set('category', state.category);
   if (state.search) params.set('search', state.search);
   if (state.sort && state.sort !== 'newest') params.set('sort', state.sort);
-  if (state.loader) params.set('loader', state.loader);
-  if (state.platform) params.set('platform', state.platform);
-  if (state.environment) params.set('environment', state.environment);
-  if (state.license) params.set('license', state.license);
-  if (state.mcVersion) params.set('mcVersion', state.mcVersion);
   if (state.page && state.page !== 1) params.set('page', String(state.page));
   const url = `${location.pathname}?${params.toString()}`;
   if (replace) history.replaceState(null, '', url);
@@ -52,17 +33,11 @@ function writeState(state, { replace = false } = {}) {
 }
 
 let state = readState();
-let availableVersions = [];
 let debounceTimer = null;
 
 const pageTitle = document.getElementById('pageTitle');
 const pageSub = document.getElementById('pageSub');
 const productsGrid = document.getElementById('productsGrid');
-const categoryList = document.getElementById('categoryList');
-const categorySearch = document.getElementById('categorySearch');
-const versionList = document.getElementById('versionList');
-const versionSearch = document.getElementById('versionSearch');
-const showAllVersions = document.getElementById('showAllVersions');
 const searchInput = document.getElementById('searchInput');
 const sortSelect = document.getElementById('sortSelect');
 const resultCount = document.getElementById('resultCount');
@@ -117,37 +92,8 @@ function applyActiveStates() {
   document.querySelectorAll('[data-cat]').forEach((link) => {
     link.classList.toggle('active', link.dataset.cat === state.category);
   });
-
-  document.querySelectorAll('.filter-option[data-filter]').forEach((option) => {
-    const filterKey = option.dataset.filter;
-    const isActive = (state[filterKey] || '') === (option.dataset.value || '');
-    option.classList.toggle('active', isActive);
-  });
-
   if (searchInput) searchInput.value = state.search;
   if (sortSelect) sortSelect.value = state.sort;
-}
-
-function renderCategories(counts = {}, filter = '') {
-  const query = filter.toLowerCase();
-  categoryList.innerHTML = categoryMeta
-    .filter(([, , label]) => label.toLowerCase().includes(query))
-    .map(([id, icon, label]) => `
-      <a class="filter-option ${id === state.category ? 'active' : ''}" data-cat-link="${id}" href="#">
-        <span>${icon}</span>
-        <b>${label}</b>
-        <em>${counts[id] || 0}</em>
-      </a>
-    `).join('');
-}
-
-function renderVersions(filter = '') {
-  const query = filter.toLowerCase();
-  const list = availableVersions.filter((v) => v.toLowerCase().includes(query));
-  const visible = showAllVersions?.checked ? list : list.slice(0, 8);
-  versionList.innerHTML = visible.map((version) => `
-    <a class="filter-option ${state.mcVersion === version ? 'active' : ''}" data-filter="mcVersion" data-value="${escapeHtml(version)}" href="#">${escapeHtml(version)}</a>
-  `).join('') || '<p class="empty-filter">No versions found.</p>';
 }
 
 function errorCard(title, message, extra = '') {
@@ -198,27 +144,6 @@ function renderPagination(container, page, totalPages) {
   });
 }
 
-async function loadCategories() {
-  try {
-    const response = await fetch(apiUrl('/api/categories'));
-    const data = await response.json();
-    renderCategories(data.counts || {});
-  } catch (error) {
-    renderCategories({});
-  }
-}
-
-async function loadFilters() {
-  try {
-    const response = await fetch(apiUrl('/api/filters'));
-    const data = await response.json();
-    availableVersions = Array.isArray(data.versions) ? data.versions : [];
-  } catch (error) {
-    availableVersions = [];
-  }
-  renderVersions(versionSearch?.value || '');
-}
-
 function buildProductsUrl() {
   const params = new URLSearchParams();
   params.set('category', state.category);
@@ -226,11 +151,6 @@ function buildProductsUrl() {
   params.set('perPage', '20');
   if (state.search) params.set('search', state.search);
   if (state.sort) params.set('sort', state.sort);
-  if (state.loader) params.set('loader', state.loader);
-  if (state.platform) params.set('platform', state.platform);
-  if (state.environment) params.set('environment', state.environment);
-  if (state.license) params.set('license', state.license);
-  if (state.mcVersion) params.set('mcVersion', state.mcVersion);
   return apiUrl(`/api/products?${params.toString()}`);
 }
 
@@ -288,7 +208,7 @@ async function loadProducts() {
     renderPagination(paginationBottom, state.page, totalPages);
 
     if (!products.length) {
-      productsGrid.innerHTML = `<div class="market-card market-card-empty"><h3>No ${escapeHtml(names[state.category] || 'products')} found</h3><p>Try adjusting your filters or search.</p></div>`;
+      productsGrid.innerHTML = `<div class="market-card market-card-empty"><h3>No ${escapeHtml(names[state.category] || 'products')} found</h3><p>Try adjusting your search or category.</p></div>`;
       return;
     }
 
@@ -302,15 +222,6 @@ async function loadProducts() {
   }
 }
 
-function setFilter(key, value) {
-  // Toggle off if clicking the already-active option, like Modrinth's single-select filter pills.
-  state[key] = state[key] === value ? '' : value;
-  state.page = 1;
-  writeState(state);
-  applyActiveStates();
-  loadProducts();
-}
-
 function refreshHeader() {
   pageTitle.textContent = names[state.category] || 'Products';
   pageSub.textContent = `Browse ${names[state.category] || 'products'} uploaded by Azor Studios.`;
@@ -318,19 +229,6 @@ function refreshHeader() {
 }
 
 document.addEventListener('click', (event) => {
-  const catLink = event.target.closest('[data-cat-link]');
-  if (catLink) {
-    event.preventDefault();
-    state.category = catLink.dataset.catLink;
-    state.page = 1;
-    writeState(state);
-    refreshHeader();
-    applyActiveStates();
-    loadCategories();
-    loadProducts();
-    return;
-  }
-
   const navCat = event.target.closest('a[data-cat]');
   if (navCat) {
     event.preventDefault();
@@ -339,34 +237,10 @@ document.addEventListener('click', (event) => {
     writeState(state);
     refreshHeader();
     applyActiveStates();
-    loadCategories();
     loadProducts();
     return;
   }
-
-  const filterOption = event.target.closest('.filter-option[data-filter]');
-  if (filterOption) {
-    event.preventDefault();
-    setFilter(filterOption.dataset.filter, filterOption.dataset.value || '');
-  }
 });
-
-document.querySelectorAll('.filter-title[data-toggle]').forEach((button) => {
-  button.addEventListener('click', () => button.closest('.filter-panel')?.classList.toggle('collapsed'));
-});
-
-categorySearch?.addEventListener('input', async () => {
-  try {
-    const response = await fetch(apiUrl('/api/categories'));
-    const data = await response.json();
-    renderCategories(data.counts || {}, categorySearch.value);
-  } catch (error) {
-    renderCategories({}, categorySearch.value);
-  }
-});
-
-versionSearch?.addEventListener('input', () => renderVersions(versionSearch.value));
-showAllVersions?.addEventListener('change', () => renderVersions(versionSearch?.value || ''));
 
 searchInput?.addEventListener('input', () => {
   clearTimeout(debounceTimer);
@@ -389,13 +263,31 @@ window.addEventListener('popstate', () => {
   state = readState();
   refreshHeader();
   applyActiveStates();
-  renderVersions(versionSearch?.value || '');
   loadProducts();
 });
+
+// Discover dropdown toggle
+document.querySelectorAll('.discover-trigger').forEach((button) => {
+  button.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    button.closest('.discover-menu')?.classList.toggle('open');
+  });
+});
+
+document.addEventListener('click', () => {
+  document.querySelectorAll('.discover-menu.open').forEach((menu) => menu.classList.remove('open'));
+});
+
+// Navbar scroll effect
+const topbar = document.querySelector('.topbar');
+const updateNavbar = () => {
+  if (topbar) topbar.classList.toggle('nav-scrolled', window.scrollY > 20);
+};
+updateNavbar();
+window.addEventListener('scroll', updateNavbar, { passive: true });
 
 writeState(state, { replace: true });
 refreshHeader();
 applyActiveStates();
-loadCategories();
-loadFilters();
 loadProducts();

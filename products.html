@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Products — Azor Studios</title>
+  <meta name="description" content="Browse Minecraft plugins, mods, setups, configs and skript files by Azor Studios.">
   <link rel="icon" href="assets/pack.png">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -13,84 +14,22 @@
     <a class="brand" href="index.html"><img src="assets/pack.png" alt=""><span>Azor<span>Studios</span></span></a>
     <nav class="desktop-nav">
       <a href="index.html">Home</a>
-      <a href="products.html?category=plugins" data-cat="plugins">Plugins</a>
-      <a href="products.html?category=setups" data-cat="setups">Setups</a>
-      <a href="products.html?category=configs" data-cat="configs">Configs</a>
-      <a href="products.html?category=skript" data-cat="skript">Skript</a>
-      <a href="products.html?category=mods" data-cat="mods">Mods</a>
+      <div class="discover-menu">
+        <button class="discover-trigger" type="button">Discover content <span>⌄</span></button>
+        <div class="discover-dropdown">
+          <a href="products.html?category=plugins" data-cat="plugins"><span>▣</span> Plugins</a>
+          <a href="products.html?category=setups" data-cat="setups"><span>⌘</span> Setups</a>
+          <a href="products.html?category=configs" data-cat="configs"><span>{ }</span> Configs</a>
+          <a href="products.html?category=skript" data-cat="skript"><span>✦</span> Skript</a>
+          <a href="products.html?category=mods" data-cat="mods"><span>⬢</span> Mods</a>
+        </div>
+      </div>
+      <a href="index.html#contact">Contact</a>
     </nav>
     <a class="ghost-btn" href="https://discord.gg/sQCZvGPWxC" target="_blank">Discord</a>
   </header>
 
-  <nav class="market-tabs shell">
-    <a href="products.html?category=mods" data-cat="mods">Mods</a>
-    <a href="products.html?category=resourcepacks" data-cat="resourcepacks">Resource Packs</a>
-    <a href="products.html?category=configs" data-cat="configs">Configs</a>
-    <a href="products.html?category=setups" data-cat="setups">Setups</a>
-    <a href="products.html?category=skript" data-cat="skript">Skript</a>
-    <a href="products.html?category=plugins" data-cat="plugins">Plugins</a>
-  </nav>
-
-  <main class="shell products-page products-layout">
-    <aside class="filter-sidebar">
-      <section class="filter-panel">
-        <button class="filter-title" type="button" data-toggle>Category <span>⌃</span></button>
-        <div class="filter-content">
-          <input class="category-search" id="categorySearch" placeholder="Search categories...">
-          <div class="option-list" id="categoryList"></div>
-        </div>
-      </section>
-
-      <section class="filter-panel">
-        <button class="filter-title" type="button" data-toggle>Game version <span>⌃</span></button>
-        <div class="filter-content">
-          <input class="category-search" id="versionSearch" placeholder="Search...">
-          <div class="option-list scroll-list" id="versionList"></div>
-          <label class="show-all-row">
-            <input type="checkbox" id="showAllVersions">
-            <span>Show all versions</span>
-          </label>
-        </div>
-      </section>
-
-      <section class="filter-panel">
-        <button class="filter-title" type="button" data-toggle>Loader <span>⌃</span></button>
-        <div class="filter-content option-list" id="loaderList">
-          <a class="filter-option" data-filter="loader" data-value="paper" href="#"><span>▣</span> Paper</a>
-          <a class="filter-option" data-filter="loader" data-value="spigot" href="#"><span>◈</span> Spigot</a>
-          <a class="filter-option" data-filter="loader" data-value="fabric" href="#"><span>◇</span> Fabric</a>
-          <a class="filter-option" data-filter="loader" data-value="forge" href="#"><span>◆</span> Forge</a>
-        </div>
-      </section>
-
-      <section class="filter-panel">
-        <button class="filter-title" type="button" data-toggle>Platform <span>⌃</span></button>
-        <div class="filter-content option-list" id="platformList">
-          <a class="filter-option" data-filter="platform" data-value="bungeecord" href="#"><span>⛓</span> BungeeCord</a>
-          <a class="filter-option" data-filter="platform" data-value="geyser" href="#"><span>⛁</span> Geyser Extension</a>
-          <a class="filter-option" data-filter="platform" data-value="velocity" href="#"><span>⛏</span> Velocity</a>
-          <a class="filter-option" data-filter="platform" data-value="waterfall" href="#"><span>⛆</span> Waterfall</a>
-        </div>
-      </section>
-
-      <section class="filter-panel">
-        <button class="filter-title" type="button" data-toggle>Environment <span>⌃</span></button>
-        <div class="filter-content option-list" id="environmentList">
-          <a class="filter-option" data-filter="environment" data-value="client" href="#"><span>▱</span> Client</a>
-          <a class="filter-option" data-filter="environment" data-value="server" href="#"><span>▰</span> Server</a>
-        </div>
-      </section>
-
-      <section class="filter-panel">
-        <button class="filter-title" type="button" data-toggle>License <span>⌃</span></button>
-        <div class="filter-content option-list" id="licenseList">
-          <a class="filter-option active" data-filter="license" data-value="" href="#"><span>○</span> All</a>
-          <a class="filter-option" data-filter="license" data-value="open_source" href="#"><span>◎</span> Open source</a>
-          <a class="filter-option" data-filter="license" data-value="proprietary" href="#"><span>●</span> Proprietary</a>
-        </div>
-      </section>
-    </aside>
-
+  <main class="shell products-page">
     <section class="products-main">
       <div class="section-title products-title">
         <span class="eyebrow">Marketplace</span>
@@ -101,7 +40,7 @@
       <div class="market-toolbar">
         <div class="market-search">
           <span class="market-search-icon">⌕</span>
-          <input id="searchInput" placeholder="Search plugins...">
+          <input id="searchInput" placeholder="Search products...">
         </div>
         <div class="market-sort">
           <label for="sortSelect">Sort by:</label>
