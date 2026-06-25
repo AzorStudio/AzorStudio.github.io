@@ -71,6 +71,25 @@ async function loadProject() {
     const allPlatforms = [...new Set(versions.flatMap((v) => v.platforms || []))];
     const allEnvironments = [...new Set(versions.flatMap((v) => v.environments || []))];
 
+    const purchaseUrl = product.purchase_url ? (product.purchase_url.startsWith('http') ? product.purchase_url : 'https://' + product.purchase_url) : '#';
+
+    let actionBtnHtml = '';
+    if (product.is_premium) {
+      actionBtnHtml = `
+        <a class="buy-btn" href="${escapeHtml(purchaseUrl)}" target="_blank" style="padding: 14px 24px; font-size: 1.1rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          Buy — $${Number(product.price || 0).toFixed(2)}
+        </a>
+      `;
+    } else {
+      actionBtnHtml = `
+        <button class="primary-btn download-hero-btn" id="downloadHeroBtn" style="padding: 14px 24px; font-size: 1.1rem; font-weight: 900; display: inline-flex; align-items: center; gap: 8px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Download
+        </button>
+      `;
+    }
+
     hero.innerHTML = `
       <img class="project-page-icon" src="${product.icon_url || 'assets/pack.png'}" alt="">
       <div>
@@ -90,10 +109,7 @@ async function loadProject() {
         </div>
       </div>
       <div class="project-hero-actions">
-        <button class="primary-btn download-hero-btn" id="downloadHeroBtn" style="padding: 14px 24px; font-size: 1.1rem; font-weight: 900; display: inline-flex; align-items: center; gap: 8px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-          Download
-        </button>
+        ${actionBtnHtml}
       </div>
     `;
 
@@ -114,6 +130,9 @@ async function loadProject() {
             ...(version.loaders || []).map(loaderLabel),
             ...(version.platforms || []).map(platformLabel)
           ];
+          const actionBtn = product.is_premium
+            ? `<a class="buy-btn" href="${escapeHtml(purchaseUrl)}" target="_blank" style="padding: 8px 16px; font-size: 0.85rem; border-radius: 8px;">Buy</a>`
+            : `<a class="primary-btn" href="${apiUrl(`/download/version/${version.id}`)}">Download</a>`;
           return `
           <div class="version-row">
             <span>${escapeHtml((version.minecraft_versions && version.minecraft_versions[0]) || version.minecraft_version)}</span>
@@ -121,7 +140,7 @@ async function loadProject() {
             <span>${versionTags.map((t) => `<span class="tag-chip">${escapeHtml(t)}</span>`).join(' ') || '—'}</span>
             <span>${new Date(version.created_at).toLocaleDateString()}</span>
             <span>${Number(version.downloads || 0)}</span>
-            <a class="primary-btn" href="${apiUrl(`/download/version/${version.id}`)}">Download</a>
+            ${actionBtn}
           </div>
         `;
         }).join('')}
@@ -135,7 +154,9 @@ async function loadProject() {
       </div>
     `;
 
-    document.getElementById('downloadHeroBtn')?.addEventListener('click', handleDownloadClick);
+    if (!product.is_premium) {
+      document.getElementById('downloadHeroBtn')?.addEventListener('click', handleDownloadClick);
+    }
   } catch (error) {
     hero.innerHTML = `<div class="market-card"><h3>Could not load project</h3><p>${escapeHtml(error.message)}</p></div>`;
   }

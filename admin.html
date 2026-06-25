@@ -16,7 +16,8 @@
       <span>Azor<span>Studios</span></span>
     </a>
     <nav class="admin-menu">
-      <a class="active" data-view="projects">⬢ Projects</a>
+      <a class="active" data-view="projects">⬢ Free Projects</a>
+      <a data-view="premium-projects">★ Premium Projects</a>
       <a data-view="analytics">◈ Analytics</a>
     </nav>
     <a class="btn btn-dark admin-logout" href="index.html">← Website</a>
@@ -29,22 +30,45 @@
     <section class="admin-view active" id="view-projects">
       <div class="admin-view-header">
         <div>
-          <p class="pill"><span></span> Projects</p>
-          <h1>Manage Projects</h1>
-          <p class="admin-subtitle">Create, edit, and manage all Azor Studios products.</p>
+          <p class="pill"><span></span> Free Projects</p>
+          <h1>Manage Free Projects</h1>
+          <p class="admin-subtitle">Create, edit, and manage all free Azor Studios products.</p>
         </div>
-        <button class="btn btn-primary btn-lg" id="addProjectBtn">+ Add Project</button>
+        <button class="btn btn-primary btn-lg" id="addProjectBtn">+ Add Free Project</button>
       </div>
 
       <div class="admin-search-bar">
         <div class="market-search">
           <span class="market-search-icon">⌕</span>
-          <input id="projectSearch" placeholder="Search projects...">
+          <input id="projectSearch" placeholder="Search free projects...">
         </div>
       </div>
 
       <div class="admin-projects-grid" id="projectsGrid">
         <div class="admin-loading">Loading projects...</div>
+      </div>
+    </section>
+
+    <!-- ===== PREMIUM PROJECTS VIEW ===== -->
+    <section class="admin-view" id="view-premium-projects">
+      <div class="admin-view-header">
+        <div>
+          <p class="pill" style="background: rgba(251, 191, 36, 0.15); color: #fbbf24; border-color: rgba(251, 191, 36, 0.3);"><span></span> Premium Projects</p>
+          <h1 style="color: #fbbf24;">Manage Premium Projects</h1>
+          <p class="admin-subtitle">Create, edit, and manage premium Minecraft products (with purchase links).</p>
+        </div>
+        <button class="btn btn-primary btn-lg" id="addPremiumProjectBtn" style="background: #fbbf24; color: #000; font-weight: 900; border: none;">+ Add Premium Project</button>
+      </div>
+
+      <div class="admin-search-bar">
+        <div class="market-search">
+          <span class="market-search-icon">⌕</span>
+          <input id="premiumProjectSearch" placeholder="Search premium projects...">
+        </div>
+      </div>
+
+      <div class="admin-projects-grid" id="premiumProjectsGrid">
+        <div class="admin-loading">Loading premium projects...</div>
       </div>
     </section>
 
@@ -123,6 +147,7 @@
               <option value="configs">Config</option>
               <option value="skript">Skript</option>
               <option value="mods">Mod</option>
+              <option value="resourcepacks">Resource Pack</option>
             </select>
           </div>
         </div>
@@ -155,6 +180,30 @@
                 <small>PNG, JPG, WebP or GIF. Appears on cards and project pages.</small>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- Premium Settings Section -->
+        <div class="form-divider">
+          <span>Premium Settings</span>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="field-group">
+            <label>Product Class</label>
+            <select name="isPremium" id="projectIsPremiumInput">
+              <option value="0" selected>Free Product</option>
+              <option value="1">Premium Product</option>
+            </select>
+          </div>
+          <div class="field-group" id="priceFieldGroup" style="display: none;">
+            <label>Price (USD) *</label>
+            <input name="price" id="projectPriceInput" type="number" step="0.01" min="0.00" placeholder="e.g. 5.99" />
+          </div>
+          <div class="field-group" id="purchaseUrlFieldGroup" style="display: none;">
+            <label>Purchase URL *</label>
+            <input name="purchaseUrl" id="projectPurchaseUrlInput" type="url" placeholder="https://builtbybit.com/resources/..." />
+            <small>Link to BuiltByBit, Polymart, etc.</small>
           </div>
         </div>
 

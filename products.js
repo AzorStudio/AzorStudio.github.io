@@ -7,7 +7,11 @@ const names = {
   configs: 'Configs',
   skript: 'Skript',
   mods: 'Mods',
-  resourcepacks: 'Resource Packs'
+  resourcepacks: 'Resource Packs',
+  premium_plugins: 'Premium Plugins',
+  premium_setups: 'Premium Setups',
+  premium_configs: 'Premium Configs',
+  premium_resourcepacks: 'Premium Resource Packs'
 };
 
 // State is derived from the URL so filters survive refresh/back-button.
@@ -160,8 +164,16 @@ function renderProductRow(product) {
   const tags = [...loaders, ...platforms].slice(0, 4);
   const extraTagCount = (loaders.length + platforms.length) - tags.length;
 
+  const premiumTag = product.is_premium
+    ? `<span class="tag-chip tag-chip-premium" style="background: rgba(251, 191, 36, 0.16); color: #fbbf24; border-color: rgba(251, 191, 36, 0.38); font-weight: 900;">Premium</span>`
+    : '';
+
+  const priceBadge = product.is_premium
+    ? `<span class="premium-price-badge" style="display: inline-block; padding: 4px 10px; border-radius: 8px; background: rgba(251, 191, 36, 0.16); color: #fbbf24; font-weight: 900; font-size: 0.95rem; border: 1px solid rgba(251, 191, 36, 0.3); margin-bottom: 6px;">$${Number(product.price || 0).toFixed(2)}</span>`
+    : '';
+
   return `
-    <a class="market-card market-row" href="project.html?id=${product.id}">
+    <a class="market-card market-row ${product.is_premium ? 'premium-market-row' : ''}" href="project.html?id=${product.id}">
       <img class="project-icon" src="${product.icon_url || 'assets/pack.png'}" alt="">
       <div class="market-row-body">
         <div class="market-row-head">
@@ -170,11 +182,13 @@ function renderProductRow(product) {
         </div>
         <p class="market-row-desc">${escapeHtml(product.short_description)}</p>
         <div class="market-row-tags">
+          ${premiumTag}
           ${tags.map((tag) => `<span class="tag-chip">${escapeHtml(tag)}</span>`).join('')}
           ${extraTagCount > 0 ? `<span class="tag-chip tag-chip-more">+${extraTagCount}</span>` : ''}
         </div>
       </div>
       <div class="market-row-stats">
+        ${priceBadge}
         <span><b>${formatCount(product.downloads)}</b> downloads</span>
         <span class="market-row-updated">${escapeHtml(timeAgo(product.updated_at || product.created_at))}</span>
       </div>

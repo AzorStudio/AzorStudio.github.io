@@ -2194,3 +2194,45 @@ input[type="file"] {
   }
 }
 
+/* Premium Product styles */
+.premium-color {
+  color: #fbbf24 !important;
+  filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.45));
+}
+
+.premium-market-row {
+  border-color: rgba(251, 191, 36, 0.16) !important;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.03), rgba(255, 255, 255, 0.01)) !important;
+}
+
+.premium-market-row:hover {
+  border-color: rgba(251, 191, 36, 0.45) !important;
+  box-shadow: 0 8px 30px rgba(251, 191, 36, 0.12) !important;
+}
+
+/* Buy buttons */
+.buy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white !important;
+  font-weight: 900;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+  transition: all 0.24s var(--ease);
+}
+
+.buy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(245, 158, 11, 0.45);
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+.buy-btn svg {
+  color: #fff;
+}
+
+

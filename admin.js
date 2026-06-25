@@ -104,10 +104,16 @@ document.querySelectorAll('.admin-menu a[data-view]').forEach(link => {
 
 /* ─────────── Projects View ─────────── */
 
+/* ─────────── Projects View ─────────── */
+
 function renderProjectCard(product) {
   const icon = product.icon_file
     ? `${apiUrl('/files/' + product.icon_file)}`
     : 'assets/pack.png';
+
+  const premiumTag = product.is_premium
+    ? `<span style="display: inline-block; padding: 2px 6px; border-radius: 4px; background: rgba(251, 191, 36, 0.15); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); font-size: 0.8rem; font-weight: 800; margin-left: 6px;">$${Number(product.price || 0).toFixed(2)}</span>`
+    : '';
 
   return `
     <div class="project-card" data-id="${product.id}">
@@ -115,7 +121,7 @@ function renderProjectCard(product) {
         <img class="project-card-icon" src="${icon}" onerror="this.src='assets/pack.png'" alt="" />
         <div class="project-card-info">
           <span class="project-card-category">${escapeHtml(categoryIcons[product.category] || '⬢')} ${escapeHtml(categoryNames[product.category] || product.category)}</span>
-          <h3>${escapeHtml(product.title)}</h3>
+          <h3>${escapeHtml(product.title)}${premiumTag}</h3>
           <p>${escapeHtml(product.short_description || '')}</p>
         </div>
       </div>
@@ -133,39 +139,106 @@ function renderProjectCard(product) {
   `;
 }
 
+let currentPremiumProductSearch = '';
+
 async function loadProjects() {
   const grid = document.getElementById('projectsGrid');
+  const premiumGrid = document.getElementById('premiumProjectsGrid');
   try {
     const { products } = await api('/api/admin/products');
     cachedProducts = products || [];
     renderProjectsList();
+    renderPremiumProjectsList();
   } catch (error) {
-    grid.innerHTML = `<div class="admin-error"><h3>Could not load projects</h3><p>${escapeHtml(error.message)}</p></div>`;
+    if (grid) grid.innerHTML = `<div class="admin-error"><h3>Could not load projects</h3><p>${escapeHtml(error.message)}</p></div>`;
+    if (premiumGrid) premiumGrid.innerHTML = `<div class="admin-error"><h3>Could not load premium projects</h3><p>${escapeHtml(error.message)}</p></div>`;
   }
 }
 
 function renderProjectsList() {
   const grid = document.getElementById('projectsGrid');
+  if (!grid) return;
   const query = currentProductSearch.toLowerCase();
   const filtered = cachedProducts.filter(p =>
-    !query || p.title.toLowerCase().includes(query) || (p.category || '').toLowerCase().includes(query)
+    p.is_premium !== 1 &&
+    (!query || p.title.toLowerCase().includes(query) || (p.category || '').toLowerCase().includes(query))
   );
 
   if (!filtered.length) {
-    grid.innerHTML = `<div class="admin-empty"><h3>No projects found</h3><p>${cachedProducts.length ? 'Try a different search.' : 'Click "+ Add Project" to create your first project.'}</p></div>`;
+    grid.innerHTML = `<div class="admin-empty"><h3>No free projects found</h3><p>${cachedProducts.some(p => p.is_premium !== 1) ? 'Try a different search.' : 'Click "+ Add Free Project" to create your first free project.'}</p></div>`;
     return;
   }
 
   grid.innerHTML = filtered.map(renderProjectCard).join('');
 }
 
-// Project search
+function renderPremiumProjectsList() {
+  const grid = document.getElementById('premiumProjectsGrid');
+  if (!grid) return;
+  const query = currentPremiumProductSearch.toLowerCase();
+  const filtered = cachedProducts.filter(p =>
+    p.is_premium === 1 &&
+    (!query || p.title.toLowerCase().includes(query) || (p.category || '').toLowerCase().includes(query))
+  );
+
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="admin-empty"><h3>No premium projects found</h3><p>${cachedProducts.some(p => p.is_premium === 1) ? 'Try a different search.' : 'Click "+ Add Premium Project" to create your first premium project.'}</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(renderProjectCard).join('');
+}
+
+// Project searches
 document.getElementById('projectSearch')?.addEventListener('input', (e) => {
   currentProductSearch = e.target.value.trim();
   renderProjectsList();
 });
 
+document.getElementById('premiumProjectSearch')?.addEventListener('input', (e) => {
+  currentPremiumProductSearch = e.target.value.trim();
+  renderPremiumProjectsList();
+});
+
 /* ─────────── Add Project ─────────── */
+
+function togglePremiumFields(isPremium) {
+  const priceField = document.getElementById('priceFieldGroup');
+  const urlField = document.getElementById('purchaseUrlFieldGroup');
+  const priceInput = document.getElementById('projectPriceInput');
+  const urlInput = document.getElementById('projectPurchaseUrlInput');
+  const categorySelect = document.querySelector('#projectForm select[name="category"]');
+  const modOption = categorySelect?.querySelector('option[value="mods"]');
+
+  if (isPremium) {
+    if (priceField) priceField.style.display = 'block';
+    if (urlField) urlField.style.display = 'block';
+    if (priceInput) priceInput.required = true;
+    if (urlInput) urlInput.required = true;
+
+    // Premium products can't be mods according to Mojang policies
+    if (modOption) modOption.disabled = true;
+    if (categorySelect && categorySelect.value === 'mods') {
+      categorySelect.value = 'plugins';
+    }
+  } else {
+    if (priceField) priceField.style.display = 'none';
+    if (urlField) urlField.style.display = 'none';
+    if (priceInput) {
+      priceInput.required = false;
+      priceInput.value = '';
+    }
+    if (urlInput) {
+      urlInput.required = false;
+      urlInput.value = '';
+    }
+    if (modOption) modOption.disabled = false;
+  }
+}
+
+document.getElementById('projectIsPremiumInput')?.addEventListener('change', (e) => {
+  togglePremiumFields(e.target.value === '1');
+});
 
 document.getElementById('addProjectBtn')?.addEventListener('click', () => {
   const form = document.getElementById('projectForm');
@@ -176,6 +249,37 @@ document.getElementById('addProjectBtn')?.addEventListener('click', () => {
   document.getElementById('initialVersionFields').style.display = '';
   document.getElementById('iconPreview').src = 'assets/pack.png';
   document.getElementById('projectStatus').textContent = '';
+
+  const isPremiumInput = document.getElementById('projectIsPremiumInput');
+  if (isPremiumInput) {
+    isPremiumInput.value = '0';
+    togglePremiumFields(false);
+  }
+
+  // Re-require files for new project
+  const mainFile = document.getElementById('mainFileInput');
+  const iconFile = document.getElementById('iconFileInput');
+  if (mainFile) mainFile.required = true;
+  if (iconFile) iconFile.required = true;
+
+  openModal('projectModal');
+});
+
+document.getElementById('addPremiumProjectBtn')?.addEventListener('click', () => {
+  const form = document.getElementById('projectForm');
+  form.reset();
+  document.getElementById('editProjectId').value = '';
+  document.getElementById('projectModalTitle').textContent = 'Create Premium Project';
+  document.getElementById('submitProjectBtn').textContent = '+ Create Premium Project';
+  document.getElementById('initialVersionFields').style.display = '';
+  document.getElementById('iconPreview').src = 'assets/pack.png';
+  document.getElementById('projectStatus').textContent = '';
+
+  const isPremiumInput = document.getElementById('projectIsPremiumInput');
+  if (isPremiumInput) {
+    isPremiumInput.value = '1';
+    togglePremiumFields(true);
+  }
 
   // Re-require files for new project
   const mainFile = document.getElementById('mainFileInput');
@@ -209,6 +313,11 @@ document.getElementById('projectForm')?.addEventListener('submit', async (e) => 
   const status = document.getElementById('projectStatus');
   const submitBtn = document.getElementById('submitProjectBtn');
   const editId = document.getElementById('editProjectId').value;
+
+  if (form.isPremium.value === '1' && form.category.value === 'mods') {
+    alert('Minecraft Mods cannot be premium according to Mojang policies.');
+    return;
+  }
 
   status.textContent = editId ? 'Saving...' : 'Uploading...';
   status.style.color = 'var(--soft)';
@@ -299,6 +408,17 @@ async function openEditProject(id) {
   form.shortDescription.value = product.short_description || '';
   form.description.value = product.description || '';
   form.license.value = product.license || 'proprietary';
+
+  // Premium fields
+  const isPremiumVal = product.is_premium === 1;
+  const isPremiumInput = document.getElementById('projectIsPremiumInput');
+  if (isPremiumInput) {
+    isPremiumInput.value = isPremiumVal ? '1' : '0';
+  }
+  togglePremiumFields(isPremiumVal);
+
+  if (form.price) form.price.value = product.price !== null ? product.price : '';
+  if (form.purchaseUrl) form.purchaseUrl.value = product.purchase_url || '';
 
   // Icon preview
   const iconUrl = product.icon_file ? apiUrl('/files/' + product.icon_file) : 'assets/pack.png';
