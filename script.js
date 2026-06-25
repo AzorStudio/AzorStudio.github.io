@@ -43,7 +43,7 @@ async function refreshAccount() {
   const menu = $('#accountMenu');
 
   try {
-    const { user } = await api('/api/me');
+    const { user } = await api('/api/auth/me');
 
     if (!user) {
       login?.classList.remove('hidden');

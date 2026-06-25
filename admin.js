@@ -604,7 +604,7 @@ async function loadAnalytics() {
 
 async function init() {
   try {
-    const me = await api('/api/me');
+    const me = await api('/api/auth/me');
     if (!me.user || me.user.role !== 'admin') {
       location.href = 'index.html';
       return;
