@@ -144,42 +144,52 @@
         <div>
           <p class="pill"><span></span> Website Customization</p>
           <h1>Manage Website Themes</h1>
-          <p class="admin-subtitle">Select the active theme for Azor Studios. Changes apply instantly across the entire website.</p>
+          <p class="admin-subtitle">Select the active theme for Azor Studios. Changes apply instantly across the entire website for all users.</p>
         </div>
       </div>
 
-      <div class="themes-grid">
-        <div class="theme-card" id="themeCardDefault" onclick="setWebsiteTheme('default')">
-          <div class="theme-card-preview default-preview">
-            <div class="theme-palette">
-              <span style="background: #070611;"></span>
-              <span style="background: #11101b;"></span>
-              <span style="background: #a855f7;"></span>
-              <span style="background: #d8b4fe;"></span>
+      <div class="themes-list" style="display: flex; flex-direction: column; gap: 24px; margin-top: 24px;">
+        
+        <!-- Default Theme Card -->
+        <div class="theme-card" id="themeCardDefault" style="background: var(--panel-2); border: 2px solid var(--line); border-radius: 24px; padding: 28px; display: flex; justify-content: space-between; align-items: center; gap: 24px; box-shadow: 0 12px 40px rgba(0,0,0,0.25);">
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <h3 style="margin: 0; font-size: 1.4rem; font-weight: 900;">Default (Dark Purple)</h3>
+              <span class="theme-status-badge" id="badgeDefault" style="display: none; padding: 4px 12px; background: #10b981; color: white; font-size: 0.8rem; font-weight: 900; border-radius: 8px; letter-spacing: 0.05em;">🌟 ACTIVE THEME</span>
+            </div>
+            <p style="margin: 0; color: var(--muted); font-size: 1rem; line-height: 1.5;">The classic sleek obsidian and vibrant purple aesthetic.</p>
+            <div style="display: flex; gap: 8px; margin-top: 6px;">
+              <span style="width: 24px; height: 24px; border-radius: 6px; background: #070611; border: 1px solid rgba(255,255,255,0.2);"></span>
+              <span style="width: 24px; height: 24px; border-radius: 6px; background: #11101b; border: 1px solid rgba(255,255,255,0.2);"></span>
+              <span style="width: 24px; height: 24px; border-radius: 6px; background: #a855f7; border: 1px solid rgba(255,255,255,0.2);"></span>
+              <span style="width: 24px; height: 24px; border-radius: 6px; background: #d8b4fe; border: 1px solid rgba(255,255,255,0.2);"></span>
             </div>
           </div>
-          <div class="theme-card-info">
-            <h3>Default (Dark Purple)</h3>
-            <p>The classic sleek obsidian and vibrant purple aesthetic.</p>
-            <span class="theme-status-badge">Active</span>
+          <div>
+            <button class="btn btn-primary theme-switch-btn" id="btnDefault" onclick="setWebsiteTheme('default')" style="padding: 14px 28px; font-size: 1.05rem; font-weight: 900; border-radius: 14px; cursor: pointer;">Activate Theme</button>
           </div>
         </div>
 
-        <div class="theme-card" id="themeCardSummer" onclick="setWebsiteTheme('summer')">
-          <div class="theme-card-preview summer-preview">
-            <div class="theme-palette">
-              <span style="background: #051622;"></span>
-              <span style="background: #0b2234;"></span>
-              <span style="background: #f59e0b;"></span>
-              <span style="background: #38bdf8;"></span>
+        <!-- Summer Theme Card -->
+        <div class="theme-card" id="themeCardSummer" style="background: var(--panel-2); border: 2px solid var(--line); border-radius: 24px; padding: 28px; display: flex; justify-content: space-between; align-items: center; gap: 24px; box-shadow: 0 12px 40px rgba(0,0,0,0.25);">
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <h3 style="margin: 0; font-size: 1.4rem; font-weight: 900;">Summer Minecraft</h3>
+              <span class="theme-status-badge" id="badgeSummer" style="display: none; padding: 4px 12px; background: #10b981; color: white; font-size: 0.8rem; font-weight: 900; border-radius: 8px; letter-spacing: 0.05em;">🌟 ACTIVE THEME</span>
+            </div>
+            <p style="margin: 0; color: var(--muted); font-size: 1rem; line-height: 1.5;">Vibrant tropical oceans, warm beach sand, and glowing 3D sun animations.</p>
+            <div style="display: flex; gap: 8px; margin-top: 6px;">
+              <span style="width: 24px; height: 24px; border-radius: 6px; background: #051622; border: 1px solid rgba(255,255,255,0.2);"></span>
+              <span style="width: 24px; height: 24px; border-radius: 6px; background: #0b2234; border: 1px solid rgba(255,255,255,0.2);"></span>
+              <span style="width: 24px; height: 24px; border-radius: 6px; background: #f59e0b; border: 1px solid rgba(255,255,255,0.2);"></span>
+              <span style="width: 24px; height: 24px; border-radius: 6px; background: #38bdf8; border: 1px solid rgba(255,255,255,0.2);"></span>
             </div>
           </div>
-          <div class="theme-card-info">
-            <h3>Summer Minecraft</h3>
-            <p>Vibrant tropical oceans, warm beach sand, and glowing 3D sun animations.</p>
-            <span class="theme-status-badge">Active</span>
+          <div>
+            <button class="btn btn-primary theme-switch-btn" id="btnSummer" onclick="setWebsiteTheme('summer')" style="padding: 14px 28px; font-size: 1.05rem; font-weight: 900; border-radius: 14px; background: #f59e0b; color: #000; border: none; cursor: pointer;">Activate Theme</button>
           </div>
         </div>
+
       </div>
       <div id="themeChangeToast" class="copy-toast"></div>
     </section>

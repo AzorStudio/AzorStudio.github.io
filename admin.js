@@ -115,12 +115,32 @@ document.querySelectorAll('.admin-menu a[data-view]').forEach(link => {
 
 function loadThemesView() {
   const current = localStorage.getItem('azor_theme') || 'default';
-  document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
-  if (current === 'summer') {
-    document.getElementById('themeCardSummer')?.classList.add('active');
-  } else {
-    document.getElementById('themeCardDefault')?.classList.add('active');
+  
+  const badgeDef = document.getElementById('badgeDefault');
+  const badgeSum = document.getElementById('badgeSummer');
+  const btnDef = document.getElementById('btnDefault');
+  const btnSum = document.getElementById('btnSummer');
+  const cardDef = document.getElementById('themeCardDefault');
+  const cardSum = document.getElementById('themeCardSummer');
+
+  if (badgeDef) badgeDef.style.display = current === 'default' ? 'inline-block' : 'none';
+  if (badgeSum) badgeSum.style.display = current === 'summer' ? 'inline-block' : 'none';
+
+  if (btnDef) {
+    btnDef.textContent = current === 'default' ? 'Active Theme' : 'Activate Theme';
+    btnDef.disabled = current === 'default';
+    btnDef.style.opacity = current === 'default' ? '0.5' : '1';
+    btnDef.style.cursor = current === 'default' ? 'default' : 'pointer';
   }
+  if (btnSum) {
+    btnSum.textContent = current === 'summer' ? 'Active Theme' : 'Activate Theme';
+    btnSum.disabled = current === 'summer';
+    btnSum.style.opacity = current === 'summer' ? '0.5' : '1';
+    btnSum.style.cursor = current === 'summer' ? 'default' : 'pointer';
+  }
+
+  if (cardDef) cardDef.style.borderColor = current === 'default' ? 'var(--primary)' : 'var(--line)';
+  if (cardSum) cardSum.style.borderColor = current === 'summer' ? '#f59e0b' : 'var(--line)';
 }
 
 async function setWebsiteTheme(theme) {
