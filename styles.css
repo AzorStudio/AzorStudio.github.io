@@ -2687,4 +2687,548 @@ html.theme-summer .summer-3d-island {
   display: inline-block;
 }
 
+/* =========================================================
+   Summer Theme Web Store Homepage (Radiant Tebex Style)
+   ========================================================= */
+.summer-theme-container {
+  display: none;
+}
+
+html.theme-summer .default-theme-container,
+body.theme-summer .default-theme-container {
+  display: none !important;
+}
+
+html.theme-summer .summer-theme-container,
+body.theme-summer .summer-theme-container {
+  display: block !important;
+}
+
+.summer-hero-bg {
+  position: relative;
+  width: 100%;
+  padding: 100px 0 60px;
+  background: linear-gradient(to bottom, rgba(5, 22, 34, 0.85), #051622), url('https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+  border-bottom: 1px solid var(--line);
+}
+
+.summer-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
+}
+
+.summer-hero-top-bar {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  z-index: 5;
+}
+
+.summer-server-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  padding: 18px 28px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.3s var(--ease);
+  position: relative;
+}
+
+.summer-server-card:hover {
+  transform: translateY(-3px);
+  border-color: #f59e0b;
+  box-shadow: 0 10px 30px rgba(245, 158, 11, 0.25);
+}
+
+.server-icon-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+
+.play-btn {
+  background: linear-gradient(135deg, #f59e0b, #ea580c);
+  color: #000;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+}
+
+.discord-btn {
+  background: #5865F2;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(88, 101, 242, 0.4);
+}
+
+.summer-server-card h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.summer-server-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.player-count-badge {
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  background: #ef4444;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+.summer-main-brand {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.summer-logo-img {
+  width: 110px;
+  height: 110px;
+  filter: drop-shadow(0 10px 30px rgba(245, 158, 11, 0.4));
+  animation: floatLogo 6s ease-in-out infinite;
+}
+
+@keyframes floatLogo {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.summer-main-brand h1 {
+  margin: 0;
+  font-size: 3.2rem;
+  font-weight: 950;
+  background: linear-gradient(135deg, #fffbeb, #fde68a, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.02em;
+}
+
+.summer-main-brand p {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.summer-main-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 32px;
+  padding-top: 40px;
+  padding-bottom: 80px;
+}
+
+.summer-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.summer-cart-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  padding: 20px 24px;
+  border-radius: var(--radius-lg);
+  color: #000;
+  box-shadow: 0 12px 35px rgba(245, 158, 11, 0.3);
+}
+
+.cart-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cart-info img {
+  width: 42px;
+  height: 42px;
+  image-rendering: pixelated;
+}
+
+.cart-info h4 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.cart-info p {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.cart-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: rgba(255, 255, 255, 0.25);
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+
+.cart-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+}
+
+.summer-nav-card {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summer-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 22px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--text);
+  font-size: 1.15rem;
+  font-weight: 800;
+  transition: all 0.2s var(--ease);
+  border: 1px solid transparent;
+}
+
+.summer-nav-item img {
+  width: 36px;
+  height: 36px;
+  image-rendering: pixelated;
+}
+
+.summer-nav-item:hover {
+  background: rgba(245, 158, 11, 0.08);
+  border-color: var(--line);
+  transform: translateX(6px);
+  color: #f59e0b;
+}
+
+.summer-top-customer {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eyebrow-gold {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: #f59e0b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.customer-info p {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.customer-avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  border: 2px solid #f59e0b;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.25);
+}
+
+.summer-store-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.summer-store-banner {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-text {
+  max-width: 420px;
+}
+
+.banner-text h2 {
+  margin: 0 0 12px;
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.banner-text p {
+  margin: 0 0 16px;
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.banner-text small {
+  color: var(--muted-2);
+  font-size: 0.85rem;
+}
+
+.featured-item-card {
+  background: linear-gradient(135deg, #b45309, #78350f);
+  border: 2px solid #f59e0b;
+  border-radius: var(--radius-md);
+  padding: 28px 36px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 16px 45px rgba(245, 158, 11, 0.35);
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+}
+
+.featured-item-card:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 20px 55px rgba(245, 158, 11, 0.5);
+}
+
+.featured-tag {
+  background: #f59e0b;
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: 950;
+  padding: 4px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+}
+
+.featured-item-card img {
+  width: 56px;
+  height: 56px;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+}
+
+.featured-item-card h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #fff;
+}
+
+.featured-item-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fde68a;
+}
+
+.summer-recent-customers {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 32px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+}
+
+.heads-grid {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.heads-grid img {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  border: 2px solid var(--line-strong);
+  transition: all 0.2s var(--ease);
+}
+
+.heads-grid img:hover {
+  transform: translateY(-3px);
+  border-color: #f59e0b;
+  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.25);
+}
+
+.goal-circle {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 320px;
+}
+
+.circle-chart {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: conic-gradient(#f59e0b 85%, rgba(255, 255, 255, 0.1) 85%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #fff;
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+}
+
+.circle-chart::before {
+  content: '';
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--panel-2);
+  z-index: -1;
+}
+
+.goal-circle h4 {
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #f59e0b;
+}
+
+.goal-circle p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.summer-info-boxes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.info-box {
+  background: var(--panel-2);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.support-box {
+  border: 1px solid #ef4444;
+  box-shadow: 0 10px 30px rgba(239, 68, 68, 0.15);
+}
+
+.refund-box {
+  border: 1px solid #3b82f6;
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.15);
+}
+
+.box-badge {
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 900;
+  padding: 6px 16px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.support-badge {
+  background: #ef4444;
+}
+
+.refund-badge {
+  background: #3b82f6;
+}
+
+.info-box p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.info-box b {
+  color: var(--text);
+}
+
+@media (max-width: 1050px) {
+  .summer-hero-top-bar {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .summer-main-grid {
+    grid-template-columns: 1fr;
+  }
+  .summer-store-banner {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+  .summer-recent-customers {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+  .heads-grid {
+    justify-content: center;
+  }
+  .goal-circle {
+    flex-direction: column;
+    text-align: center;
+  }
+  .summer-info-boxes {
+    grid-template-columns: 1fr;
+  }
+}
+
 

@@ -150,6 +150,7 @@ async function setWebsiteTheme(theme) {
       body: JSON.stringify({ theme })
     });
     localStorage.setItem('azor_theme', theme);
+    localStorage.setItem('azor_theme_override', Date.now());
     if (theme === 'summer') {
       document.documentElement.classList.add('theme-summer');
     } else {
