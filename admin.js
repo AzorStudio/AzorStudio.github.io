@@ -26,6 +26,13 @@ function escapeHtml(s) {
   return String(s || '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 }
 
+function parseEmojis(text) {
+  if (!text) return '';
+  return text
+    .replace(/(?:&lt;|<):([a-zA-Z0-9_]+):[0-9]+(?:&gt;|>)/g, '<img class="custom-emoji" src="assets/emojis/$1.png" alt=":$1:" onerror="this.replaceWith(this.alt)">')
+    .replace(/:([a-zA-Z0-9_]+):/g, '<img class="custom-emoji" src="assets/emojis/$1.png" alt=":$1:" onerror="this.replaceWith(this.alt)">');
+}
+
 function formatSize(bytes) {
   let size = Number(bytes || 0);
   const units = ['B', 'KB', 'MB', 'GB'];
@@ -99,8 +106,55 @@ document.querySelectorAll('.admin-menu a[data-view]').forEach(link => {
     target?.classList.add('active');
 
     if (link.dataset.view === 'analytics') loadAnalytics();
+    if (link.dataset.view === 'emojis') loadEmojisView();
   });
 });
+
+/* ─────────── Emojis View ─────────── */
+
+const customEmojiList = [
+  // Tools & Weapons
+  'sword', 'pickaxe', 'axe', 'shovel', 'hoe', 'fishing_rod', 'briefcase',
+  // Blocks & Stations
+  'anvil', 'chest', 'furnace', 'brewing_stand', 'enchanting_table', 'blocks',
+  // Items & Economy
+  'coins', 'emerald', 'map', 'banner', 'armor', 'cow',
+  // Scrolls & Presents
+  'scroll_green', 'scroll_blue', 'scroll_purple', 'scroll_red', 'gift', 'gift_glow', 'gift_open',
+  // XP & Bottles
+  'coin_bottle_small', 'coin_bottle_big', 'xp', 'xp_bottle_small',
+  // Arrows
+  'arrow_left', 'arrow_right', 'arrow_up', 'arrow_down',
+  // Controls
+  'return', 'refresh', 'dots', 'plus', 'minus',
+  // Status & Indicators
+  'info', 'warning', 'question', 'check', 'x', 'circle',
+  // System Icons & Tools
+  'home', 'search', 'filter', 'trash', 'gear', 'layers', 'pencil', 'toggle_off', 'toggle_on',
+  // Locks & Pointers
+  'lock', 'unlock', 'tri_left', 'tri_right', 'tri_up', 'tri_down'
+];
+
+function loadEmojisView() {
+  const grid = document.getElementById('emojisGrid');
+  if (!grid) return;
+  grid.innerHTML = customEmojiList.map(name => `
+    <div class="emoji-card" onclick="copyEmojiCode(':${name}:')">
+      <img src="assets/emojis/${name}.png" alt=":${name}:" class="emoji-card-img" onerror="this.src='assets/pack.png'" />
+      <code>:${name}:</code>
+    </div>
+  `).join('');
+}
+
+function copyEmojiCode(code) {
+  navigator.clipboard.writeText(code).then(() => {
+    const toast = document.getElementById('emojiCopyStatus');
+    if (!toast) return;
+    toast.textContent = `Copied ${code} to clipboard!`;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  }).catch(() => alert(`Failed to copy. Please manually copy: ${code}`));
+}
 
 /* ─────────── Projects View ─────────── */
 
@@ -121,8 +175,8 @@ function renderProjectCard(product) {
         <img class="project-card-icon" src="${icon}" onerror="this.src='assets/pack.png'" alt="" />
         <div class="project-card-info">
           <span class="project-card-category">${escapeHtml(categoryIcons[product.category] || '⬢')} ${escapeHtml(categoryNames[product.category] || product.category)}</span>
-          <h3>${escapeHtml(product.title)}${premiumTag}</h3>
-          <p>${escapeHtml(product.short_description || '')}</p>
+          <h3>${parseEmojis(escapeHtml(product.title))}${premiumTag}</h3>
+          <p>${parseEmojis(escapeHtml(product.short_description || ''))}</p>
         </div>
       </div>
       <div class="project-card-meta">
@@ -495,7 +549,7 @@ async function loadVersionsList(productId) {
               <span>${Number(v.downloads || 0)} downloads</span>
               <span>${escapeHtml(timeAgo(v.created_at))}</span>
             </div>
-            ${v.changelog ? `<p class="version-item-changelog">${escapeHtml(v.changelog)}</p>` : ''}
+            ${v.changelog ? `<p class="version-item-changelog">${parseEmojis(escapeHtml(v.changelog))}</p>` : ''}
           </div>
           <div class="version-item-actions">
             <button class="btn btn-sm btn-outline" onclick="openEditVersion(${v.id}, ${JSON.stringify(escapeHtml(JSON.stringify(v)))})">Edit</button>
@@ -755,5 +809,6 @@ window.openVersions = openVersions;
 window.openEditVersion = openEditVersion;
 window.deleteVersion = deleteVersion;
 window.closeModal = closeModal;
+window.copyEmojiCode = copyEmojiCode;
 
 init();

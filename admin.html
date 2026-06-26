@@ -18,6 +18,7 @@
     <nav class="admin-menu">
       <a class="active" data-view="projects">⬢ Free Projects</a>
       <a data-view="premium-projects">★ Premium Projects</a>
+      <a data-view="emojis">✦ Custom Icons</a>
       <a data-view="analytics">◈ Analytics</a>
     </nav>
     <a class="btn btn-dark admin-logout" href="index.html">← Website</a>
@@ -121,6 +122,19 @@
         </div>
         <div id="activityTable" class="table-wrap">Loading...</div>
       </div>
+    </section>
+
+    <!-- ===== EMOJIS VIEW ===== -->
+    <section class="admin-view" id="view-emojis">
+      <div class="admin-view-header">
+        <div>
+          <p class="pill"><span></span> Icons & Emojis</p>
+          <h1>Custom Minecraft Icons</h1>
+          <p class="admin-subtitle">Click any icon below to copy its shorthand code (e.g. <code>:sword:</code>) for use in titles, summaries, descriptions, and changelogs.</p>
+        </div>
+      </div>
+      <div id="emojiCopyStatus" class="copy-toast"></div>
+      <div class="emojis-grid" id="emojisGrid"></div>
     </section>
 
   </main>

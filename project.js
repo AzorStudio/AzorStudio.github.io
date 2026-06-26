@@ -6,6 +6,13 @@ function escapeHtml(value) {
   }[character]));
 }
 
+function parseEmojis(text) {
+  if (!text) return '';
+  return text
+    .replace(/(?:&lt;|<):([a-zA-Z0-9_]+):[0-9]+(?:&gt;|>)/g, '<img class="custom-emoji" src="assets/emojis/$1.png" alt=":$1:" onerror="this.replaceWith(this.alt)">')
+    .replace(/:([a-zA-Z0-9_]+):/g, '<img class="custom-emoji" src="assets/emojis/$1.png" alt=":$1:" onerror="this.replaceWith(this.alt)">');
+}
+
 function formatSize(bytes) {
   let size = Number(bytes || 0);
   const units = ['B', 'KB', 'MB', 'GB'];
@@ -93,8 +100,8 @@ async function loadProject() {
       <img class="project-page-icon" src="${iconUrl}" onerror="this.src='assets/pack.png'" alt="">
       <div>
         <span class="market-type">${escapeHtml(product.category)}</span>
-        <h1>${escapeHtml(product.title)}</h1>
-        <p>${escapeHtml(product.short_description)}</p>
+        <h1>${parseEmojis(escapeHtml(product.title))}</h1>
+        <p>${parseEmojis(escapeHtml(product.short_description))}</p>
         <div class="project-meta">
           <span>By ${escapeHtml(product.author || product.uploader || 'Azor Studios')}</span>
           <span>${Number(product.downloads || 0)} downloads</span>
@@ -115,7 +122,7 @@ async function loadProject() {
     overview.innerHTML = `
       <div class="market-card">
         <h3>Overview</h3>
-        <p>${escapeHtml(product.description || product.short_description || 'No description provided.')}</p>
+        <p>${parseEmojis(escapeHtml(product.description || product.short_description || 'No description provided.'))}</p>
       </div>
     `;
 
@@ -149,7 +156,7 @@ async function loadProject() {
     changelogBox.innerHTML = `
       <div class="market-card">
         <h3>Changelog</h3>
-        ${versions.map((version) => `<p><b>${escapeHtml(version.version_name)}</b><br>${escapeHtml(version.changelog || 'No changelog provided.')}</p>`).join('')}
+        ${versions.map((version) => `<p><b>${parseEmojis(escapeHtml(version.version_name))}</b><br>${parseEmojis(escapeHtml(version.changelog || 'No changelog provided.'))}</p>`).join('')}
       </div>
     `;
 

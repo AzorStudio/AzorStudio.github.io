@@ -60,6 +60,13 @@ function escapeHtml(value) {
   }[character]));
 }
 
+function parseEmojis(text) {
+  if (!text) return '';
+  return text
+    .replace(/(?:&lt;|<):([a-zA-Z0-9_]+):[0-9]+(?:&gt;|>)/g, '<img class="custom-emoji" src="assets/emojis/$1.png" alt=":$1:" onerror="this.replaceWith(this.alt)">')
+    .replace(/:([a-zA-Z0-9_]+):/g, '<img class="custom-emoji" src="assets/emojis/$1.png" alt=":$1:" onerror="this.replaceWith(this.alt)">');
+}
+
 function formatCount(value) {
   const number = Number(value || 0);
   if (number >= 1000000) return `${(number / 1000000).toFixed(number % 1000000 === 0 ? 0 : 1)}M`;
@@ -181,10 +188,10 @@ function renderProductRow(product) {
       <img class="project-icon" src="${iconUrl}" onerror="this.src='assets/pack.png'" alt="">
       <div class="market-row-body">
         <div class="market-row-head">
-          <h3>${escapeHtml(product.title)}</h3>
+          <h3>${parseEmojis(escapeHtml(product.title))}</h3>
           <span class="market-row-author">by ${escapeHtml(product.author || product.uploader || 'Azor Studios')}</span>
         </div>
-        <p class="market-row-desc">${escapeHtml(product.short_description)}</p>
+        <p class="market-row-desc">${parseEmojis(escapeHtml(product.short_description))}</p>
         <div class="market-row-tags">
           ${premiumTag}
           ${tags.map((tag) => `<span class="tag-chip">${escapeHtml(tag)}</span>`).join('')}
