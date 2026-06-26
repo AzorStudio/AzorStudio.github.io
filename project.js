@@ -1,5 +1,3 @@
-const API_BASE = (window.OBSIDIAN_API_URL || '').replace(/\/$/, '');
-const apiUrl = (path) => `${API_BASE}${path}`;
 const id = new URLSearchParams(location.search).get('id');
 
 function escapeHtml(value) {
