@@ -1210,11 +1210,106 @@ th {
     left: 18px;
     right: 18px;
     z-index: 60;
-    display: grid;
-    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
     border: 1px solid var(--line);
     border-radius: 18px;
     background: var(--panel);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+  }
+
+  .mobile-nav-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+  }
+
+  .mobile-nav-top a {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff !important;
+    padding: 0 !important;
+  }
+
+  .mobile-admin-link {
+    color: var(--primary) !important;
+  }
+
+  .mobile-nav-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .mobile-nav-title {
+    font-size: 0.8rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--soft);
+    letter-spacing: 0.05em;
+  }
+
+  .mobile-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .mobile-nav-grid a {
+    padding: 10px 14px !important;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--muted) !important;
+    transition: all 0.2s var(--ease);
+  }
+
+  .mobile-nav-grid a:hover,
+  .mobile-nav-grid a.active {
+    background: var(--primary);
+    color: #fff !important;
+    border-color: var(--primary);
+  }
+
+  .mobile-nav-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+  }
+
+  .mobile-nav-actions button,
+  .mobile-nav-actions .ghost-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  .mobile-account-badge {
+    justify-content: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+  }
+
+  .mobile-account-menu {
+    position: static;
+    width: 100%;
+    margin-top: 4px;
+    border: 1px solid var(--line);
+    background: var(--panel-2);
   }
 
   .mobile-nav a {

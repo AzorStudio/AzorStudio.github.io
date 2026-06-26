@@ -32,59 +32,79 @@ function closeModals() {
 }
 
 function closeAccountMenu() {
-  $('#accountMenu')?.classList.add('hidden');
+  document.querySelectorAll('#accountMenu, .mobile-account-menu').forEach(el => el.classList.add('hidden'));
 }
 
 async function refreshAccount() {
-  const login = $('#loginButton');
-  const signup = $('#signupButton');
-  const badge = $('#accountBadge');
-  const admin = $('#adminLink');
-  const menu = $('#accountMenu');
+  const logins = document.querySelectorAll('#loginButton, .mobile-login-btn');
+  const signups = document.querySelectorAll('#signupButton, .mobile-signup-btn');
+  const badges = document.querySelectorAll('#accountBadge, .mobile-account-badge');
+  const admins = document.querySelectorAll('#adminLink, .mobile-admin-link');
+  const menus = document.querySelectorAll('#accountMenu, .mobile-account-menu');
 
   try {
     const { user } = await api('/api/auth/me');
 
     if (!user) {
-      login?.classList.remove('hidden');
-      signup?.classList.remove('hidden');
-      badge?.classList.add('hidden');
-      admin?.classList.add('hidden');
-      menu?.classList.add('hidden');
+      logins.forEach(el => el.classList.remove('hidden'));
+      signups.forEach(el => el.classList.remove('hidden'));
+      badges.forEach(el => el.classList.add('hidden'));
+      admins.forEach(el => el.classList.add('hidden'));
+      menus.forEach(el => el.classList.add('hidden'));
       return;
     }
 
-    login?.classList.add('hidden');
-    signup?.classList.add('hidden');
-    badge?.classList.remove('hidden');
-    admin?.classList.toggle('hidden', user.role !== 'admin');
+    logins.forEach(el => el.classList.add('hidden'));
+    signups.forEach(el => el.classList.add('hidden'));
+    badges.forEach(el => el.classList.remove('hidden'));
+    admins.forEach(el => el.classList.toggle('hidden', user.role !== 'admin'));
 
-    badge.innerHTML = `<img src="${user.avatarUrl}" onerror="this.src='assets/pack.png'" alt=""><span>${user.username}</span><b>⌄</b>`;
+    badges.forEach(badge => {
+      badge.innerHTML = `<img src="${user.avatarUrl}" onerror="this.src='assets/pack.png'" alt=""><span>${user.username}</span><b>⌄</b>`;
+    });
   } catch (error) {
     // Not logged in or backend unavailable. Keep page usable.
   }
 }
 
-$('#mobileToggle')?.addEventListener('click', () => $('#mobileNav')?.classList.toggle('open'));
-
-$('#accountBadge')?.addEventListener('click', (event) => {
-  event.stopPropagation();
-  $('#accountMenu')?.classList.toggle('hidden');
+document.querySelectorAll('#mobileToggle, .mobile-toggle').forEach(btn => {
+  btn.addEventListener('click', (event) => {
+    event.stopPropagation();
+    document.getElementById('mobileNav')?.classList.toggle('open');
+  });
 });
 
-document.addEventListener('click', closeAccountMenu);
-
-$('#accountPasswordButton')?.addEventListener('click', (event) => {
-  event.stopPropagation();
-  closeAccountMenu();
-  $('#changePasswordModal')?.classList.add('open');
+document.querySelectorAll('#accountBadge, .mobile-account-badge').forEach(badge => {
+  badge.addEventListener('click', (event) => {
+    event.stopPropagation();
+    document.querySelectorAll('#accountMenu, .mobile-account-menu').forEach(el => el.classList.toggle('hidden'));
+  });
 });
 
-$('#accountLogoutButton')?.addEventListener('click', async (event) => {
-  event.stopPropagation();
-  await api('/api/auth/logout', { method: 'POST' });
+document.addEventListener('click', (event) => {
+  if (!event.target.closest('.mobile-nav')) {
+    document.getElementById('mobileNav')?.classList.remove('open');
+  }
   closeAccountMenu();
-  refreshAccount();
+});
+
+document.querySelectorAll('#accountPasswordButton, .mobile-password-btn').forEach(btn => {
+  btn.addEventListener('click', (event) => {
+    event.stopPropagation();
+    closeAccountMenu();
+    document.getElementById('mobileNav')?.classList.remove('open');
+    document.getElementById('changePasswordModal')?.classList.add('open');
+  });
+});
+
+document.querySelectorAll('#accountLogoutButton, .mobile-logout-btn').forEach(btn => {
+  btn.addEventListener('click', async (event) => {
+    event.stopPropagation();
+    await api('/api/auth/logout', { method: 'POST' });
+    closeAccountMenu();
+    document.getElementById('mobileNav')?.classList.remove('open');
+    refreshAccount();
+  });
 });
 
 document.querySelectorAll('[data-modal]').forEach((button) => {

@@ -51,13 +51,43 @@
   </header>
 
   <nav class="mobile-nav" id="mobileNav">
-    <a href="index.html">Home</a>
-    <a href="products.html?category=plugins">Plugins</a>
-    <a href="products.html?category=setups">Setups</a>
-    <a href="products.html?category=configs">Configs</a>
-    <a href="products.html?category=skript">Skript</a>
-    <a href="products.html?category=mods">Mods</a>
-    <a href="https://discord.gg/sQCZvGPWxC" target="_blank">Discord</a>
+    <div class="mobile-nav-top">
+      <a href="index.html">Home</a>
+      <a class="mobile-admin-link hidden" href="admin.html">🛡️ Admin Dashboard</a>
+    </div>
+
+    <div class="mobile-nav-section">
+      <span class="mobile-nav-title">Free Content</span>
+      <div class="mobile-nav-grid">
+        <a href="products.html?category=plugins" data-cat="plugins">Plugins</a>
+        <a href="products.html?category=setups" data-cat="setups">Setups</a>
+        <a href="products.html?category=configs" data-cat="configs">Configs</a>
+        <a href="products.html?category=skript" data-cat="skript">Skript</a>
+        <a href="products.html?category=mods" data-cat="mods">Mods</a>
+        <a href="products.html?category=resourcepacks" data-cat="resourcepacks">Packs</a>
+      </div>
+    </div>
+
+    <div class="mobile-nav-section">
+      <span class="mobile-nav-title" style="color: #fbbf24;">Premium Content</span>
+      <div class="mobile-nav-grid">
+        <a href="products.html?category=premium_plugins" data-cat="premium_plugins">Plugins</a>
+        <a href="products.html?category=premium_setups" data-cat="premium_setups">Setups</a>
+        <a href="products.html?category=premium_resourcepacks" data-cat="premium_resourcepacks">Packs</a>
+        <a href="products.html?category=premium_skript" data-cat="premium_skript">Skript</a>
+      </div>
+    </div>
+
+    <div class="mobile-nav-actions">
+      <a href="https://discord.gg/sQCZvGPWxC" target="_blank" class="ghost-btn mobile-discord-btn">Discord</a>
+      <span class="profile-chip mobile-account-badge hidden"></span>
+      <div class="account-menu mobile-account-menu hidden">
+        <button type="button" class="mobile-password-btn">Change password</button>
+        <button type="button" class="mobile-logout-btn">Logout</button>
+      </div>
+      <button class="ghost-btn mobile-login-btn" data-modal="loginModal">Login</button>
+      <button class="primary-btn mobile-signup-btn" data-modal="signupModal">Sign Up</button>
+    </div>
   </nav>
 
   <main>
