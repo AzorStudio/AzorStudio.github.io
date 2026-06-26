@@ -174,9 +174,11 @@ function renderProductRow(product) {
     ? `<span class="premium-price-badge" style="display: inline-block; padding: 4px 10px; border-radius: 8px; background: rgba(251, 191, 36, 0.16); color: #fbbf24; font-weight: 900; font-size: 0.95rem; border: 1px solid rgba(251, 191, 36, 0.3); margin-bottom: 6px;">$${Number(product.price || 0).toFixed(2)}</span>`
     : '';
 
+  const iconUrl = product.icon_file ? apiUrl('/files/' + product.icon_file) : (product.icon_url || 'assets/pack.png');
+
   return `
     <a class="market-card market-row ${product.is_premium ? 'premium-market-row' : ''}" href="project.html?id=${product.id}">
-      <img class="project-icon" src="${product.icon_url || 'assets/pack.png'}" alt="">
+      <img class="project-icon" src="${iconUrl}" onerror="this.src='assets/pack.png'" alt="">
       <div class="market-row-body">
         <div class="market-row-head">
           <h3>${escapeHtml(product.title)}</h3>
