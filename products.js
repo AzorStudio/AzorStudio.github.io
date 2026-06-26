@@ -1,6 +1,3 @@
-const API_BASE = (window.OBSIDIAN_API_URL || '').replace(/\/$/, '');
-const apiUrl = (path) => `${API_BASE}${path}`;
-
 const names = {
   plugins: 'Plugins',
   setups: 'Setups',
@@ -284,27 +281,6 @@ window.addEventListener('popstate', () => {
   applyActiveStates();
   loadProducts();
 });
-
-// Discover dropdown toggle
-document.querySelectorAll('.discover-trigger').forEach((button) => {
-  button.addEventListener('click', (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    button.closest('.discover-menu')?.classList.toggle('open');
-  });
-});
-
-document.addEventListener('click', () => {
-  document.querySelectorAll('.discover-menu.open').forEach((menu) => menu.classList.remove('open'));
-});
-
-// Navbar scroll effect
-const topbar = document.querySelector('.topbar');
-const updateNavbar = () => {
-  if (topbar) topbar.classList.toggle('nav-scrolled', window.scrollY > 20);
-};
-updateNavbar();
-window.addEventListener('scroll', updateNavbar, { passive: true });
 
 writeState(state, { replace: true });
 refreshHeader();
