@@ -2237,13 +2237,15 @@ input[type="file"] {
 
 /* Custom Minecraft Emojis */
 .custom-emoji {
-  display: inline-block;
-  vertical-align: middle;
-  width: 1.4em;
-  height: 1.4em;
-  margin: 0 0.15em;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  width: 1.4em !important;
+  height: 1.4em !important;
+  margin: 0 0.15em !important;
+  border-radius: 0 !important;
+  image-rendering: pixelated !important;
+  image-rendering: crisp-edges !important;
+  object-fit: contain !important;
 }
 
 /* Emojis Grid View */
