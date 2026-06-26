@@ -19,6 +19,7 @@
       <a class="active" data-view="projects">⬢ Free Projects</a>
       <a data-view="premium-projects">★ Premium Projects</a>
       <a data-view="emojis">✦ Custom Icons</a>
+      <a data-view="themes">🔆 Themes</a>
       <a data-view="analytics">◈ Analytics</a>
     </nav>
     <a class="btn btn-dark admin-logout" href="index.html">← Website</a>
@@ -135,6 +136,52 @@
       </div>
       <div id="emojiCopyStatus" class="copy-toast"></div>
       <div class="emojis-grid" id="emojisGrid"></div>
+    </section>
+
+    <!-- ===== THEMES VIEW ===== -->
+    <section class="admin-view" id="view-themes">
+      <div class="admin-view-header">
+        <div>
+          <p class="pill"><span></span> Website Customization</p>
+          <h1>Manage Website Themes</h1>
+          <p class="admin-subtitle">Select the active theme for Azor Studios. Changes apply instantly across the entire website.</p>
+        </div>
+      </div>
+
+      <div class="themes-grid">
+        <div class="theme-card" id="themeCardDefault" onclick="setWebsiteTheme('default')">
+          <div class="theme-card-preview default-preview">
+            <div class="theme-palette">
+              <span style="background: #070611;"></span>
+              <span style="background: #11101b;"></span>
+              <span style="background: #a855f7;"></span>
+              <span style="background: #d8b4fe;"></span>
+            </div>
+          </div>
+          <div class="theme-card-info">
+            <h3>Default (Dark Purple)</h3>
+            <p>The classic sleek obsidian and vibrant purple aesthetic.</p>
+            <span class="theme-status-badge">Active</span>
+          </div>
+        </div>
+
+        <div class="theme-card" id="themeCardSummer" onclick="setWebsiteTheme('summer')">
+          <div class="theme-card-preview summer-preview">
+            <div class="theme-palette">
+              <span style="background: #051622;"></span>
+              <span style="background: #0b2234;"></span>
+              <span style="background: #f59e0b;"></span>
+              <span style="background: #38bdf8;"></span>
+            </div>
+          </div>
+          <div class="theme-card-info">
+            <h3>Summer Minecraft</h3>
+            <p>Vibrant tropical oceans, warm beach sand, and glowing 3D sun animations.</p>
+            <span class="theme-status-badge">Active</span>
+          </div>
+        </div>
+      </div>
+      <div id="themeChangeToast" class="copy-toast"></div>
     </section>
 
   </main>

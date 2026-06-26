@@ -2415,4 +2415,276 @@ input[type="file"] {
   opacity: 1;
 }
 
+/* =========================================================
+   Summer Minecraft Website Theme
+   ========================================================= */
+html.theme-summer {
+  /* Ocean depths & sandy sunset tones */
+  --bg: #051622;
+  --bg-deep: #030e17;
+  --panel: #0b2234;
+  --panel-2: #122e45;
+  --panel-3: #1a3c57;
+
+  --text: #fffbeb;
+  --muted: #93c5fd;
+  --muted-2: #60a5fa;
+
+  /* Tropical Sun & Sunset Oranges/Yellows */
+  --purple: #f59e0b;
+  --purple-2: #ea580c;
+  --purple-3: #c2410c;
+  --soft: #fde68a;
+
+  --line: rgba(245, 158, 11, 0.2);
+  --line-strong: rgba(245, 158, 11, 0.45);
+  --glass: rgba(245, 158, 11, 0.06);
+  --glass-strong: rgba(245, 158, 11, 0.1);
+
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+  --shadow-soft: 0 14px 45px rgba(234, 88, 12, 0.2);
+}
+
+html.theme-summer .floating-card {
+  border-color: rgba(245, 158, 11, 0.4) !important;
+  box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2) !important;
+}
+
+/* =========================================================
+   3D Isometric Minecraft Summer Island (Dribbble Inspired)
+   ========================================================= */
+.summer-3d-island {
+  position: absolute;
+  top: -60px;
+  right: -40px;
+  width: 240px;
+  height: 240px;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  animation: floatIsland 6s ease-in-out infinite;
+  display: none;
+  z-index: 10;
+}
+
+html.theme-summer .summer-3d-island {
+  display: block;
+}
+
+@keyframes floatIsland {
+  0%, 100% { transform: translateY(0) rotateX(25deg) rotateY(-35deg); }
+  50% { transform: translateY(-15px) rotateX(28deg) rotateY(-30deg); }
+}
+
+.cube {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  transform-style: preserve-3d;
+}
+
+.island-block {
+  bottom: 20px;
+  left: 60px;
+}
+
+.cube .face {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  image-rendering: pixelated;
+}
+
+/* 3D Sand & Ocean Block */
+.island-block .top {
+  background: linear-gradient(135deg, #fde047 50%, #38bdf8 50%);
+  transform: rotateX(90deg) translateZ(60px);
+  border: 2px solid #eab308;
+  box-shadow: inset 0 0 12px rgba(234, 179, 8, 0.5);
+}
+
+.island-block .left {
+  background: linear-gradient(to bottom, #facc15 30%, #0284c7 30%);
+  transform: rotateY(-90deg) translateZ(60px);
+  border: 2px solid #ca8a04;
+}
+
+.island-block .right {
+  background: linear-gradient(to bottom, #eab308 30%, #0369a1 30%);
+  transform: translateZ(60px);
+  border: 2px solid #a16207;
+}
+
+/* Floating Summer Sun */
+.sun-sphere {
+  position: absolute;
+  top: 10px;
+  left: 80px;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, #fef08a 20%, #f59e0b 80%);
+  box-shadow: 0 0 40px #f59e0b, 0 0 80px #f59e0b;
+  border-radius: 50%;
+  animation: sunPulse 4s ease-in-out infinite;
+  transform: translateZ(100px);
+}
+
+@keyframes sunPulse {
+  0%, 100% { transform: translateZ(100px) scale(1); box-shadow: 0 0 40px #f59e0b, 0 0 80px #f59e0b; }
+  50% { transform: translateZ(100px) scale(1.15); box-shadow: 0 0 60px #f59e0b, 0 0 120px #f59e0b; }
+}
+
+/* Floating Summer Chest/Bee */
+.floating-chest {
+  width: 40px;
+  height: 40px;
+  top: 30px;
+  left: 40px;
+  animation: floatChest 4s ease-in-out infinite;
+}
+
+@keyframes floatChest {
+  0%, 100% { transform: translateZ(120px) translateY(0) rotateY(0deg); }
+  50% { transform: translateZ(120px) translateY(-10px) rotateY(15deg); }
+}
+
+.floating-chest .face {
+  width: 40px;
+  height: 40px;
+  background: #b45309;
+  border: 2px solid #78350f;
+}
+.floating-chest .top { transform: rotateX(90deg) translateZ(20px); background: #d97706; }
+.floating-chest .left { transform: rotateY(-90deg) translateZ(20px); }
+.floating-chest .right { transform: translateZ(20px); }
+.floating-chest .right::after {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 14px;
+  width: 12px;
+  height: 8px;
+  background: #fcd34d;
+  border: 1px solid #78350f;
+}
+
+/* Rising Summer Sun Particles */
+.summer-particles span {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #f59e0b;
+  box-shadow: 0 0 10px #fde047;
+  border-radius: 2px;
+  animation: floatParticle 3s linear infinite;
+  opacity: 0;
+}
+.summer-particles span:nth-child(1) { top: 120px; left: 40px; animation-delay: 0s; }
+.summer-particles span:nth-child(2) { top: 140px; left: 120px; animation-delay: 0.6s; }
+.summer-particles span:nth-child(3) { top: 100px; left: 180px; animation-delay: 1.2s; }
+.summer-particles span:nth-child(4) { top: 160px; left: 90px; animation-delay: 1.8s; }
+.summer-particles span:nth-child(5) { top: 110px; left: 150px; animation-delay: 2.4s; }
+
+@keyframes floatParticle {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(-60px) scale(0.4); opacity: 0; }
+}
+
+/* =========================================================
+   Admin Themes Grid View
+   ========================================================= */
+.themes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.theme-card {
+  background: var(--panel-2);
+  border: 2px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.24s var(--ease);
+  position: relative;
+}
+
+.theme-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.theme-card.active {
+  border-color: var(--primary);
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.2);
+}
+
+.theme-card-preview {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.default-preview {
+  background: linear-gradient(135deg, #070611, #171426);
+  border-bottom: 1px solid var(--line);
+}
+
+.summer-preview {
+  background: linear-gradient(135deg, #051622, #0b2234);
+  border-bottom: 1px solid var(--line);
+}
+
+.theme-palette {
+  display: flex;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-palette span {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.theme-card-info {
+  padding: 24px;
+}
+
+.theme-card-info h3 {
+  margin: 0 0 8px;
+  font-size: 1.3rem;
+}
+
+.theme-card-info p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.theme-status-badge {
+  display: none;
+  padding: 6px 14px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 900;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.theme-card.active .theme-status-badge {
+  display: inline-block;
+}
+
 

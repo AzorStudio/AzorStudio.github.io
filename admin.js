@@ -107,8 +107,45 @@ document.querySelectorAll('.admin-menu a[data-view]').forEach(link => {
 
     if (link.dataset.view === 'analytics') loadAnalytics();
     if (link.dataset.view === 'emojis') loadEmojisView();
+    if (link.dataset.view === 'themes') loadThemesView();
   });
 });
+
+/* ─────────── Themes View ─────────── */
+
+function loadThemesView() {
+  const current = localStorage.getItem('azor_theme') || 'default';
+  document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
+  if (current === 'summer') {
+    document.getElementById('themeCardSummer')?.classList.add('active');
+  } else {
+    document.getElementById('themeCardDefault')?.classList.add('active');
+  }
+}
+
+async function setWebsiteTheme(theme) {
+  try {
+    await api('/api/admin/theme', {
+      method: 'POST',
+      body: JSON.stringify({ theme })
+    });
+    localStorage.setItem('azor_theme', theme);
+    if (theme === 'summer') {
+      document.documentElement.classList.add('theme-summer');
+    } else {
+      document.documentElement.classList.remove('theme-summer');
+    }
+    loadThemesView();
+    const toast = document.getElementById('themeChangeToast');
+    if (toast) {
+      toast.textContent = `Global theme switched to ${theme.toUpperCase()} for all users!`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+  } catch (error) {
+    alert(`Failed to update global theme: ${error.message}`);
+  }
+}
 
 /* ─────────── Emojis View ─────────── */
 
@@ -810,5 +847,6 @@ window.openEditVersion = openEditVersion;
 window.deleteVersion = deleteVersion;
 window.closeModal = closeModal;
 window.copyEmojiCode = copyEmojiCode;
+window.setWebsiteTheme = setWebsiteTheme;
 
 init();
