@@ -70,6 +70,7 @@ async function loadProject() {
     const allEnvironments = [...new Set(versions.flatMap((v) => v.environments || []))];
 
     const purchaseUrl = product.purchase_url ? (product.purchase_url.startsWith('http') ? product.purchase_url : 'https://' + product.purchase_url) : '#';
+    const iconUrl = product.icon_file ? apiUrl('/files/' + product.icon_file) : (product.icon_url || 'assets/pack.png');
 
     let actionBtnHtml = '';
     if (product.is_premium) {
@@ -89,7 +90,7 @@ async function loadProject() {
     }
 
     hero.innerHTML = `
-      <img class="project-page-icon" src="${product.icon_url || 'assets/pack.png'}" alt="">
+      <img class="project-page-icon" src="${iconUrl}" onerror="this.src='assets/pack.png'" alt="">
       <div>
         <span class="market-type">${escapeHtml(product.category)}</span>
         <h1>${escapeHtml(product.title)}</h1>
