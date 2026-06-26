@@ -11,7 +11,8 @@ const names = {
   premium_plugins: 'Premium Plugins',
   premium_setups: 'Premium Setups',
   premium_configs: 'Premium Configs',
-  premium_resourcepacks: 'Premium Resource Packs'
+  premium_resourcepacks: 'Premium Resource Packs',
+  premium_skript: 'Premium Skript'
 };
 
 // State is derived from the URL so filters survive refresh/back-button.
@@ -201,7 +202,7 @@ function renderProductRow(product) {
 }
 
 async function loadProducts() {
-  if (!API_BASE || API_BASE.includes('localhost')) {
+  if (!API_BASE) {
     errorCard('Backend URL missing', 'Open config.js and set window.OBSIDIAN_API_URL to your Railway backend URL.', `Current API URL: ${API_BASE || 'empty'}`);
     return;
   }
